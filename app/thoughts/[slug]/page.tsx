@@ -1,5 +1,6 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import ShareBar from '@/components/ShareBar';
 import ReactMarkdown from 'react-markdown';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -30,13 +31,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function ThoughtPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ThoughtPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const supabase = createClient();
+
   const { data: p } = await supabase
     .from('thoughts')
     .select('*')
@@ -46,19 +44,67 @@ export default async function ThoughtPage({
 
   if (!p) notFound();
 
+  const { data: others } = await supabase
+    .from('thoughts')
+    .select('slug,title')
+    .eq('status', 'published')
+    .neq('slug', slug)
+    .order('published_at', { ascending: false })
+    .limit(2);
+
+  const dateStr = p.published_at
+    ? new Date(p.published_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    : '';
+
   return (
     <>
       <Nav />
-      <article className="article" style={{ paddingTop: 104 }}>
-        {p.category ? <span className="th-cat">{p.category}</span> : null}
-        <h1 className="article-title">{p.title}</h1>
-        {p.cover_url ? (
-          <img className="article-hero img-l" src={p.cover_url} alt={p.title} />
-        ) : null}
+      <article className="article">
+        <a href="/thoughts" className="article-back">
+          ← Thoughts
+        </a>
+        <div className="article-head">
+          {p.category ? <span className="note-cat">{p.category}</span> : null}
+          <h1>{p.title}</h1>
+          <div className="article-meta">
+            <span>Darshan Suthar</span>
+            {dateStr ? (
+              <>
+                <span className="am-dot" />
+                <span>{dateStr}</span>
+              </>
+            ) : null}
+            {p.read_minutes ? (
+              <>
+                <span className="am-dot" />
+                <span>{p.read_minutes} min read</span>
+              </>
+            ) : null}
+          </div>
+        </div>
+
+        <ShareBar />
+
         <div className="prose">
           <ReactMarkdown>{p.body || ''}</ReactMarkdown>
         </div>
       </article>
+
+      {others && others.length > 0 ? (
+        <div className="article-foot">
+          <div className="more-notes">
+            <h4>Keep reading</h4>
+            <div className="more-reading">
+              {others.map((o) => (
+                <a key={o.slug} href={`/thoughts/${o.slug}`}>
+                  {o.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <Footer />
     </>
   );

@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createClient } from '@/lib/supabase/server';
+import { img } from '@/lib/media';
 
 export const revalidate = 60;
 
@@ -21,7 +22,7 @@ export default async function AboutPage() {
     .select('value')
     .eq('key', 'about_banner_url')
     .maybeSingle();
-  const banner = bannerRow?.value || '/images/about%20hero.jpeg';
+  const banner = bannerRow?.value || img('about%20hero.jpeg');
 
   return (
     <>
