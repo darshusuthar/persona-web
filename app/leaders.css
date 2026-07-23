@@ -85,8 +85,9 @@
 }
 @media (max-width: 860px) {
   .leaders-hero { padding: 56px 18px 66px; }
-  .lh-faces { grid-template-columns: repeat(auto-fit, 72px); justify-content: center; gap: 18px 22px; margin: 56px auto; }
-  .lh-face { width: 72px; height: 72px; }
+  .lh-faces { grid-template-columns: repeat(3, 92px); justify-content: center; gap: 22px; margin: 56px auto; }
+  .lh-face { width: 92px; height: 92px; }
+  .lh-face:nth-child(n + 10) { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .lh-faces { animation: none; }
