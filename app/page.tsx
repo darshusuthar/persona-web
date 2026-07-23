@@ -15,15 +15,14 @@ const GUESTS = [
   'P001 Thumbnail Youtube 1.png', 'P002 Thumbnail Youtube 1.png', 'P003 Thumbnail Youtube 1.png',
   'P004 Thumbnail Youtube 1.png', 'P005 Thumbnail Youtube 1.png', 'P006 Thumbnail Youtube 1.png',
   'P007 Thumbnail Youtube 1.png', 'P008 Thumbnail Youtube 1.png', 'P009 Thumbnail Youtube 1.png',
-  'P010 Thumbnail Youtube 1.png', 'P011 Thumbnail Youtube 1.png',
-  'P012 Thumbnail Youtube 1.png', 'P013 Thumbnail Youtube 1.png', 'P014 Thumbnail Youtube 1.png',
-  'P015 Thumbnail Youtube 1.png', 'P015 Thumbnail Youtube-1 1.png', 'P017 Thumbnail Youtube 1.png',
-  'P018 Thumbnail Youtube 1.png', 'P019 Thumbnail Youtube 1.png', 'P020 Thumbnail Youtube Small 1.png',
-  'P022 Thumbnail Youtube 1.png', 'P023 Thumbnail Youtube 1.png', 'P024 Thumbnail Youtube 1.png',
-  'P024 Thumbnail Youtube-1 1.png', 'P025 Thumbnail Youtube 1.png', 'P026 Thumbnail Youtube Small 1.png',
-  'P027 Thumbnail Youtube 1.png', 'P028 Thumbnail Youtube Small 1.png', 'P029 Thumbnail Youtube Small 1.png',
-  'P030 Thumbnail Youtube 1.png', 'P031 Thumbnail Youtube 1.png', 'P032 Thumbnail Youtube Small 1.png',
-  'P033 Thumbnail Youtube Small 1.png',
+  'P010 Thumbnail Youtube 1.png', 'P011 Thumbnail Youtube 1.png', 'P012 Thumbnail Youtube 1.png',
+  'P013 Thumbnail Youtube 1.png', 'P014 Thumbnail Youtube 1.png', 'P015 Thumbnail Youtube 1.png',
+  'P015 Thumbnail Youtube-1 1.png', 'P017 Thumbnail Youtube 1.png', 'P018 Thumbnail Youtube 1.png',
+  'P019 Thumbnail Youtube 1.png', 'P020 Thumbnail Youtube Small 1.png', 'P022 Thumbnail Youtube 1.png',
+  'P023 Thumbnail Youtube 1.png', 'P024 Thumbnail Youtube 1.png', 'P024 Thumbnail Youtube-1 1.png',
+  'P025 Thumbnail Youtube 1.png', 'P026 Thumbnail Youtube Small 1.png', 'P027 Thumbnail Youtube 1.png',
+  'P028 Thumbnail Youtube Small 1.png', 'P029 Thumbnail Youtube Small 1.png', 'P030 Thumbnail Youtube 1.png',
+  'P031 Thumbnail Youtube 1.png', 'P032 Thumbnail Youtube Small 1.png', 'P033 Thumbnail Youtube Small 1.png',
 ];
 
 // deterministic pseudo-random so SSR and client match
@@ -31,36 +30,6 @@ const rnd = (s: number) => {
   const x = Math.sin(s * 12.9898) * 43758.5453;
   return x - Math.floor(x);
 };
-const ROWS = 3;
-const ROWH = 176; // vertical spacing between rows (kept > max size so circles never collide)
-const SIZE_MIN = 76;
-const SIZE_RANGE = 54; // sizes 76–130, varied
-type Tile = { f: string; x: number; y: number; size: number; d: number; dur: number };
-const TILES: Tile[] = [];
-for (let r = 0; r < ROWS; r++) {
-  const idxs: number[] = [];
-  for (let i = r; i < GUESTS.length; i += ROWS) idxs.push(i);
-  // lay out left-to-right with random gaps, then center the whole row
-  let cursor = 0;
-  const laid = idxs.map((i) => {
-    const size = SIZE_MIN + Math.round(rnd(i * 3 + 1) * SIZE_RANGE);
-    const cx = cursor + size / 2;
-    const gap = 40 + Math.round(rnd(i * 5 + 2) * 84); // random 40–124px; row overflows viewport
-    cursor += size + gap;
-    return { i, size, cx };
-  });
-  const rowWidth = laid.length ? laid[laid.length - 1].cx + laid[laid.length - 1].size / 2 : 0;
-  laid.forEach((t) => {
-    TILES.push({
-      f: GUESTS[t.i],
-      x: Math.round(t.cx - rowWidth / 2),
-      y: Math.round(r * ROWH + ROWH / 2 + (rnd(t.i * 7 + 3) * 44 - 22)),
-      size: t.size,
-      d: +(rnd(t.i * 11 + 4) * 2.6).toFixed(2),
-      dur: +(6.4 + rnd(t.i * 13 + 5) * 3.6).toFixed(2),
-    });
-  });
-}
 
 export default async function Home() {
   const supabase = createClient();
@@ -118,7 +87,7 @@ export default async function Home() {
             <h2>
               Built what I <span className="serif">believed in</span>.
             </h2>
-            <p className="apps-sub">Two ventures, one direction — solve the core problem.</p>
+            <p className="apps-sub">Two ventures, with goal to addressed the core problem.</p>
           </div>
           <div className="apps-slider" id="appsSlider">
             <div className="apps-card">
@@ -135,45 +104,42 @@ export default async function Home() {
               <img className="ac-img" src={img('media/Teem.fit%20Banner.png')} alt="teem.fit" />
             </div>
             <div className="apps-card">
-              <div className="ac-name">PRODUX Studio</div>
+              <div className="ac-name">Produx Design Studio</div>
               <p className="ac-desc">
-                The B2B SaaS design studio behind it — research-led, speed-obsessed, built to help
-                early and mid-stage products scale.
+                Early and mid stage B2B SaaS faced challenge in finding a right design partner who
+                can solve the complex problem. That led me to build research-led, speed-obsessed,
+                early and mid-stage product design service.
               </p>
               <div className="ac-cta">
                 <a href="https://www.produxdesign.studio" target="_blank" rel="noopener">
                   Explore PRODUX ↗
                 </a>
               </div>
-              <img className="ac-img" src={img('media/Produx%20Banner.png')} alt="PRODUX Studio" />
+              <img className="ac-img" src={img('media/Produx%20Banner.png')} alt="Produx Design Studio" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* COMMUNITY — floating wall of leaders (replaces the podcast rows) */}
+      {/* COMMUNITY — grid wall of leaders (replaces the podcast rows) */}
       <section className="leaders-hero" id="host" data-nav="dark">
         <div className="lh-inner">
           <h1 className="lh-title">
             Hosting Tech <span className="serif">Titans</span>
           </h1>
           <div className="lh-faces" aria-hidden="true">
-            {TILES.map((g, i) => (
+            {GUESTS.map((f, i) => (
               <span
                 key={i}
                 className="lh-face"
                 style={
                   {
-                    left: `calc(50% + ${g.x}px)`,
-                    top: `${g.y}px`,
-                    width: g.size,
-                    height: g.size,
-                    ['--d' as string]: `${g.d}s`,
-                    ['--dur' as string]: `${g.dur}s`,
+                    ['--d' as string]: `${(rnd(i * 11 + 4) * 3).toFixed(2)}s`,
+                    ['--dur' as string]: `${(6 + rnd(i * 13 + 5) * 3.5).toFixed(2)}s`,
                   } as React.CSSProperties
                 }
               >
-                <img src={guestFile(g.f)} alt="" />
+                <img src={guestFile(f)} alt="" />
               </span>
             ))}
           </div>

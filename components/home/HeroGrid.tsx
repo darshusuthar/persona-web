@@ -6,6 +6,7 @@ const HERO = Array.from({ length: 26 }, (_, i) => img(`media/hero-${i + 1}.jpg`)
 
 export default function HeroGrid() {
   const [imgs, setImgs] = useState<string[]>(HERO.slice(0, 4));
+  const [op, setOp] = useState<number[]>([1, 1, 1, 1]);
   const [modal, setModal] = useState<string | null>(null);
   const shownRef = useRef<string[]>([]);
   const pausedRef = useRef(false);
@@ -26,16 +27,31 @@ export default function HeroGrid() {
       };
       const swap = () => {
         if (!pausedRef.current) {
-          setImgs((prev) => {
-            const avail = HERO.filter((u) => !shownRef.current.includes(u));
-            const pick = avail.length
-              ? avail[Math.floor(Math.random() * avail.length)]
-              : HERO[Math.floor(Math.random() * HERO.length)];
-            const next = [...prev];
-            next[i] = pick;
-            shownRef.current = next;
-            return next;
+          // fade out, swap the image, fade back in
+          setOp((prev) => {
+            const n = [...prev];
+            n[i] = 0;
+            return n;
           });
+          timers.push(
+            window.setTimeout(() => {
+              setImgs((prev) => {
+                const avail = HERO.filter((u) => !shownRef.current.includes(u));
+                const pick = avail.length
+                  ? avail[Math.floor(Math.random() * avail.length)]
+                  : HERO[Math.floor(Math.random() * HERO.length)];
+                const next = [...prev];
+                next[i] = pick;
+                shownRef.current = next;
+                return next;
+              });
+              setOp((prev) => {
+                const n = [...prev];
+                n[i] = 1;
+                return n;
+              });
+            }, 430)
+          );
         }
         schedule();
       };
@@ -64,7 +80,13 @@ export default function HeroGrid() {
           <div
             key={i}
             className="hbox"
-            style={{ backgroundImage: `url(${src})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: op[i],
+              transition: 'opacity 0.43s ease',
+            }}
             onClick={() => setModal(src)}
           />
         ))}
