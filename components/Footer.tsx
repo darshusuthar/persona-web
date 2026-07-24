@@ -1,3 +1,5 @@
+import StoryModal from '@/components/StoryModal';
+
 export default function Footer() {
   return (
     <footer className="foot-big foot-connect-sec" data-nav="light">
@@ -9,7 +11,10 @@ export default function Footer() {
           <a href="https://www.instagram.com/darshansuthar7/" target="_blank" rel="noopener">Instagram ↗</a>
           <a href="https://www.youtube.com/@Darshans_Diary/videos" target="_blank" rel="noopener">YouTube ↗</a>
         </div>
-        <div className="foot-bottom2"><span>© 2026 Darshan Suthar</span></div>
+        <div className="foot-bottom2">
+          <span>© 2026 Darshan Suthar</span>
+          <StoryModal />
+        </div>
       </div>
     </footer>
   );

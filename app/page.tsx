@@ -1,7 +1,7 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import HeroGrid from '@/components/home/HeroGrid';
-import HeroStats from '@/components/home/HeroStats';
+import HeroCentered from '@/components/home/HeroCentered';
+import HeroSplit from '@/components/home/HeroSplit';
 import Testimonials from '@/components/home/Testimonials';
 import { createClient } from '@/lib/supabase/server';
 import { img } from '@/lib/media';
@@ -42,17 +42,9 @@ export default async function Home() {
     <>
       <Nav />
 
-      {/* HERO */}
-      <section className="ap hero-ap" data-nav="light">
-        <div className="wrap hero-split">
-          <div className="hero-left">
-            <h1 className="hero-name">Darshan Suthar</h1>
-            <p className="k">Designer. Founder. Host.</p>
-            <HeroStats stats={stats ?? []} />
-          </div>
-          <HeroGrid />
-        </div>
-      </section>
+      {/* HERO — swap <HeroCentered/> ↔ <HeroSplit/> to change the layout */}
+      <HeroCentered stats={stats ?? []} />
+      {false && <HeroSplit stats={stats ?? []} />}
 
       {/* CRAFT STORIES */}
       <section className="ap dark ap-left" id="designer" data-nav="dark">
