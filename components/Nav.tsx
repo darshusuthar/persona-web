@@ -35,7 +35,7 @@ const items = [
 ];
 
 export default function Nav() {
-  const path = usePathname();
+  const path = usePathname() || '/';
   return (
     <div className="ap-nav" id="apNav">
       <div className="wrap">
