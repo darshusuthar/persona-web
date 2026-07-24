@@ -221,6 +221,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:20px}
   .hero-ap .hero-left .hero-name,.hero-ap .hero-left .k{text-align:center}
   .hero-ap .hero-left .hero-stats{align-self:center;justify-content:center}
   .hero-ap .hero-left .hero-stats .s{text-align:center}
+  .hero-ap .hero-split,.hero-ap .hero-left,.hero-ap .hero-grid{min-width:0}
+  .hero-ap .hero-grid{width:100%}
 }
 .hero-grid{display:flex;gap:20px;align-items:flex-start}
 .hero-col{flex:1;display:flex;flex-direction:column;gap:20px}
