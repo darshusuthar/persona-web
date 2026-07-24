@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const IHome = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -36,8 +37,29 @@ const items = [
 
 export default function Nav() {
   const path = usePathname() || '/';
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y <= 80) setHidden(false); // first fold: always visible
+        else if (y > lastY + 5) setHidden(true); // scrolling down → hide
+        else if (y < lastY - 5) setHidden(false); // scrolling up → show
+        lastY = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <div className="ap-nav" id="apNav">
+    <div className={`ap-nav${hidden ? ' nav-hidden' : ''}`} id="apNav">
       <div className="wrap">
         <div className="ap-right">
           {items.map(({ href, label, Icon }) => {
