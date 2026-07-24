@@ -247,7 +247,7 @@ footer.foot-connect-sec{border-top:none}
 .foot-cta{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:center;margin-top:30px}
 .foot-cta a{font-size:17px;color:var(--ink);font-weight:500;transition:.15s}
 .foot-cta a:hover{opacity:.55}
-@media(max-width:560px){.foot-cta{flex-wrap:nowrap;gap:10px}.foot-cta a{font-size:12.5px;white-space:nowrap}}
+@media(max-width:560px){.foot-cta{flex-wrap:nowrap;gap:16px}.foot-cta a{font-size:12px;white-space:nowrap}}
 .foot-links{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:38px;justify-content:center}
 .foot-links a{font-size:16px;color:var(--muted);transition:.15s}
 .foot-links a:hover{color:var(--ink)}
@@ -846,9 +846,9 @@ footer.foot-connect-sec{border-top:none}
 .th-row-media{display:flex;align-items:center;justify-content:center;padding:30px;min-height:300px}
 .th-thumb{width:min(64%,236px);aspect-ratio:4/3;border-radius:22px;background-size:contain;background-repeat:no-repeat;background-position:center;background-color:transparent}
 @media(max-width:820px){
-  .th-row{grid-template-columns:1fr}
-  .th-row-body{padding:34px 28px 8px}
-  .th-row-media{min-height:0;padding:8px 28px 30px;justify-content:flex-start}
+  .th-row{grid-template-columns:1fr;min-height:0}
+  .th-row-body{padding:24px 26px}
+  .th-row-media{display:none}
   .th-thumb{width:min(70%,220px)}
 }
 
@@ -881,14 +881,15 @@ footer.foot-connect-sec{border-top:none}
 .pcast-play .lp-ic{width:22px;height:22px;flex:0 0 auto}
 .pcast-name{margin-top:16px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
 .pcast-co{font-size:14px;color:var(--muted);margin-top:3px}
-@media(max-width:880px){.pcast-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.pcast-grid{grid-template-columns:1fr}}
+@media(max-width:880px){.pcast-grid{grid-template-columns:1fr 1fr;gap:44px 32px}}
+@media(max-width:560px){.pcast-grid{grid-template-columns:1fr;gap:28px}}
 
 /* ---- podcast platform buttons ---- */
 .pod-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
 .pod-btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:999px;font-size:15px;font-weight:600;color:#fff;text-decoration:none;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
 .pod-btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .pod-btn svg{width:19px;height:19px;flex:0 0 auto;fill:currentColor}
+@media(max-width:560px){.pod-btns{flex-wrap:nowrap;gap:8px}.pod-btn{padding:8px 12px;font-size:12px;gap:6px}.pod-btn svg{width:15px;height:15px}}
 .pod-btn.yt{background:#FF0000}
 .pod-btn.sp{background:#1DB954}
 .pod-btn.ap{background:linear-gradient(135deg,#B24BE8,#6E2CD6)}
@@ -959,12 +960,12 @@ body.pcast-page .th-main{position:relative;z-index:1}
   /* app-style bottom-centred nav on mobile */
   .ap-nav{top:auto;bottom:0;left:0;right:0}
   .ap-nav .wrap{width:100%;max-width:none;padding:0}
-  .ap-nav .ap-right{width:100%;justify-content:space-around;gap:6px;background:#1b1b1d;border-radius:20px 20px 0 0;padding:12px 14px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.28);backdrop-filter:none;-webkit-backdrop-filter:none}
-  .ap-nav .ap-right a{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:0;color:#9a9aa0;padding:12px;border-radius:999px}
+  .ap-nav .ap-right{width:100%;justify-content:space-around;gap:6px;background:#fff;border-top:1px solid var(--line);border-radius:20px 20px 0 0;padding:12px 14px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -2px 10px rgba(0,0,0,.05);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .ap-nav .ap-right a{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:0;color:#6E6E73;padding:12px;border-radius:999px}
   .ap-nav .ap-right a .ap-ic{display:inline-flex}
   .ap-nav .ap-right a .ap-ic svg{width:24px;height:24px;display:block}
   .ap-nav .ap-right a .ap-label{display:none;font-size:15px;font-weight:600;line-height:1}
-  .ap-nav .ap-right a.active{background:#fff;color:#111;padding:11px 20px;gap:8px}
+  .ap-nav .ap-right a.active{background:var(--ink);color:#fff;padding:11px 20px;gap:8px}
   .ap-nav .ap-right a.active .ap-label{display:inline}
   body{padding-bottom:92px}                 /* clear the floating bottom nav */
   footer.foot-big{padding-bottom:48px}
