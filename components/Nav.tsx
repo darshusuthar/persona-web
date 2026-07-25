@@ -37,6 +37,10 @@ const items = [
 
 export default function Nav() {
   const path = usePathname() || '/';
+  // Home is the default selection; it deselects only when another page matches.
+  const current = ['/thoughts', '/podcast', '/about'].find(
+    (h) => path === h || path.startsWith(h + '/')
+  );
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -63,7 +67,7 @@ export default function Nav() {
       <div className="wrap">
         <div className="ap-right">
           {items.map(({ href, label, Icon }) => {
-            const active = href === '/' ? path === '/' : path.startsWith(href);
+            const active = href === '/' ? !current : href === current;
             return (
               <Link key={href} href={href} className={active ? 'active' : ''}>
                 <span className="ap-ic">
