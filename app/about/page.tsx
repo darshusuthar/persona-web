@@ -30,7 +30,7 @@ export default async function AboutPage() {
       <main className="ab-main">
         <div className="wrap">
           <header className="ab-intro">
-            <h1 className="ab-title">A builder who thinks in systems.</h1>
+            <h1 className="ab-title">A builder who&apos;s obsessed with craft.</h1>
             <div className="ab-lead">
               <p>
                 I&apos;m Darshan. A designer by training, a builder by instinct, always curious

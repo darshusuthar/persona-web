@@ -6,7 +6,8 @@ export type FieldType =
   | 'image'
   | 'select'
   | 'datetime'
-  | 'url';
+  | 'url'
+  | 'blocks';
 
 export interface Field {
   name: string;
@@ -55,7 +56,7 @@ export const COLLECTIONS: Collection[] = [
       { name: 'slug', label: 'Slug (url)', type: 'text' },
       { name: 'category', label: 'Category', type: 'text' },
       { name: 'excerpt', label: 'Excerpt', type: 'textarea' },
-      { name: 'body', label: 'Body (markdown)', type: 'markdown' },
+      { name: 'blocks', label: 'Content', type: 'blocks' },
       { name: 'cover_url', label: 'Cover image', type: 'image' },
       { name: 'read_minutes', label: 'Read minutes', type: 'number' },
       STATUS,

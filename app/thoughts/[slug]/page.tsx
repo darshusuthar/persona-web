@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import ShareBar from '@/components/ShareBar';
+import ThoughtBlocks from '@/components/ThoughtBlocks';
 import ReactMarkdown from 'react-markdown';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
@@ -89,9 +90,13 @@ export default async function ThoughtPage({ params }: { params: Promise<{ slug: 
 
         <ShareBar />
 
-        <div className="prose">
-          <ReactMarkdown>{p.body || ''}</ReactMarkdown>
-        </div>
+        {Array.isArray(p.blocks) && p.blocks.length > 0 ? (
+          <ThoughtBlocks blocks={p.blocks} />
+        ) : (
+          <div className="prose">
+            <ReactMarkdown>{p.body || ''}</ReactMarkdown>
+          </div>
+        )}
       </article>
 
       {others && others.length > 0 ? (

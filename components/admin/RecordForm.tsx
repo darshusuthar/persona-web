@@ -2,9 +2,31 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createSupabaseBrowser } from '@/lib/supabase/browserClient';
+import BlockEditor, { type Block } from '@/components/admin/BlockEditor';
 import type { Collection, Field } from '@/lib/admin/collections';
 
 type Values = Record<string, unknown>;
+
+const blockId = () =>
+  typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `b_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+// Ensure blocks fields are ready: give each block an id, and if there are no
+// blocks yet but legacy markdown `body` exists, seed it as the first Text section.
+function seedValues(collection: Collection, record: Values): Values {
+  const init: Values = { ...record };
+  const bf = collection.fields.find((f) => f.type === 'blocks');
+  if (bf) {
+    let blocks = Array.isArray(init[bf.name]) ? (init[bf.name] as Block[]) : [];
+    blocks = blocks.map((b) => (b && (b as Block).id ? b : ({ ...b, id: blockId() } as Block)));
+    if (blocks.length === 0 && typeof init.body === 'string' && init.body.trim()) {
+      blocks = [{ id: blockId(), type: 'text', markdown: init.body as string }];
+    }
+    init[bf.name] = blocks;
+  }
+  return init;
+}
 
 function toLocalInput(v: unknown): string {
   if (!v) return '';
@@ -25,7 +47,7 @@ export default function RecordForm({
 }) {
   const router = useRouter();
   const supabase = createSupabaseBrowser();
-  const [values, setValues] = useState<Values>({ ...record });
+  const [values, setValues] = useState<Values>(() => seedValues(collection, record));
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
 
@@ -131,6 +153,20 @@ function FieldInput({
   upload: (n: string, f: File) => void;
 }) {
   const v = value ?? '';
+
+  // Block editor manages its own inputs, so it renders in a div, not a <label>.
+  if (field.type === 'blocks') {
+    return (
+      <div className="adm-field adm-field-blocks">
+        <span>{field.label}</span>
+        <BlockEditor
+          value={(value as Block[]) || []}
+          onChange={(blocks) => set(field.name, blocks)}
+        />
+      </div>
+    );
+  }
+
   return (
     <label className="adm-field">
       <span>{field.label}</span>
