@@ -23,11 +23,14 @@ export async function generateMetadata({
   const supabase = createClient();
   const { data: p } = await supabase.from('thoughts').select('*').eq('slug', slug).single();
   if (!p) return {};
+  // SEO/social image: use the explicit OG image, else the thought's cover (widget icon).
+  const ogImage = p.seo_og_image || p.cover_url || undefined;
   return {
     title: p.seo_title || `${p.title} — Darshan Suthar`,
     description: p.seo_description || p.excerpt || undefined,
     alternates: p.canonical_url ? { canonical: p.canonical_url } : undefined,
-    openGraph: { images: p.seo_og_image ? [p.seo_og_image] : [] },
+    openGraph: { images: ogImage ? [ogImage] : [] },
+    twitter: ogImage ? { card: 'summary_large_image', images: [ogImage] } : undefined,
   };
 }
 
@@ -68,13 +71,14 @@ export default async function ThoughtPage({ params }: { params: Promise<{ slug: 
           <h1>{p.title}</h1>
           <div className="article-meta">
             <span>Darshan Suthar</span>
-            {dateStr ? (
+            {/* timestamp + read-time hidden from front-end (data kept) */}
+            {false && dateStr ? (
               <>
                 <span className="am-dot" />
                 <span>{dateStr}</span>
               </>
             ) : null}
-            {p.read_minutes ? (
+            {false && p.read_minutes ? (
               <>
                 <span className="am-dot" />
                 <span>{p.read_minutes} min read</span>

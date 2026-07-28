@@ -34,7 +34,7 @@ export default async function AboutPage() {
           </div>
           <header className="ab-intro">
             <h1 className="ab-title">
-              A builder who thinks in <span className="serif">systems.</span>
+              A builder who thinks in systems.
             </h1>
             <p className="ab-sub">
               Designer, founder and host — but underneath all of it, someone who can&apos;t help

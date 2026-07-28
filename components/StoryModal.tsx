@@ -6,21 +6,14 @@ const SECTIONS = [
     title: 'How I wanted it to feel',
     body: (
       <>
-        <p>I wanted something small and clearly mine, not a big website. Four places, nothing extra:</p>
+        <p>I wanted something small and clearly mine, not a big website. Four places, nothing extra, each with one job:</p>
         <ul>
-          <li>Home: who I am in one screen</li>
-          <li>Thoughts: what I&apos;m noticing lately</li>
-          <li>Podcast: the conversations I host</li>
-          <li>About: how I got here</li>
+          <li>Home: who I am, fast. It leads with my name, the three hats, and the work</li>
+          <li>Thoughts: a running log, not essays. Short and casual, the way I&apos;d say it to a friend</li>
+          <li>Podcast: just the guests and where to listen. The people are the pitch</li>
+          <li>About: how I got here, told in chapters, because a career is a story, not a resume</li>
         </ul>
-        <p>A few calls I made along the way:</p>
-        <ul>
-          <li>Home has one job, tell you who I am fast, so it leads with my name, the three hats, and the work</li>
-          <li>Thoughts is a running log, not essays. Short and casual, the way I&apos;d say it to a friend</li>
-          <li>The podcast page is just the guests and where to listen. The people are the pitch</li>
-          <li>About is told in chapters, because a career is a story, not a resume</li>
-          <li>Navigation stays a tiny glass pill up top, and an app-style bar at the bottom on mobile that slides away as you scroll</li>
-        </ul>
+        <p>Navigation stays a tiny glass pill up top, and an app-style bar at the bottom on mobile that slides away as you scroll.</p>
         <p>If you can&apos;t hold the whole map in your head, it&apos;s too much.</p>
       </>
     ),
@@ -61,7 +54,7 @@ const SECTIONS = [
         <p>The media sits in one place in Supabase, kept in tidy folders:</p>
         <ul>
           <li>Podcast guest photos in one folder</li>
-          <li>Sensibull and Meesho case images in their own</li>
+          <li>Case-study images in their own</li>
           <li>Thought icons in another</li>
         </ul>
         <p>The site just points at those URLs, so swapping an image is a drop-in, not a code change. Add it all up and the site grows with me instead of freezing the day it launched.</p>
@@ -99,7 +92,7 @@ export default function StoryModal() {
             ✕
           </button>
           <div className="sm-content">
-            <h2 className="sm-title">How this website came to life</h2>
+            <h2 className="sm-title">How this artefact came to life?</h2>
             <p>This site is small on purpose. Here is the whole thinking, in three parts.</p>
 
             <div className="sm-acc">

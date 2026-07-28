@@ -77,7 +77,7 @@ export default async function Home() {
         <div className="wrap">
           <div className="apps-head">
             <h2>
-              Built what I <span className="serif">believed in</span>.
+              Built what I believed in.
             </h2>
             <p className="apps-sub">Two ventures, with goal to addressed the core problem.</p>
           </div>
@@ -117,7 +117,7 @@ export default async function Home() {
       <section className="leaders-hero" id="host" data-nav="dark">
         <div className="lh-inner">
           <h1 className="lh-title">
-            Hosting Tech <span className="serif">Titans</span>
+            Hosting Tech Titans
           </h1>
           <div className="lh-faces" aria-hidden="true">
             {GUESTS.map((f, i) => (

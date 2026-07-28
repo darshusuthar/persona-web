@@ -34,9 +34,12 @@ export default async function ThoughtsPage() {
                 <div className="th-row-body">
                   <span className="th-cat">{p.category}</span>
                   <h2 className="th-row-title">{p.title}</h2>
-                  <div className="th-row-meta">
-                    {p.read_minutes ? `${p.read_minutes} min read` : ''}
-                  </div>
+                  {/* read-time hidden from front-end (data kept) */}
+                  {false && (
+                    <div className="th-row-meta">
+                      {p.read_minutes ? `${p.read_minutes} min read` : ''}
+                    </div>
+                  )}
                   <span className="th-row-cta">Read thought ›</span>
                 </div>
                 <div className="th-row-media">
