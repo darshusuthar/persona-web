@@ -89,24 +89,27 @@ export default function RecordForm({
 
   return (
     <form className="adm-form" onSubmit={onSubmit}>
-      {main.map((f) => (
-        <FieldInput key={f.name} field={f} value={values[f.name]} set={set} upload={uploadImage} />
-      ))}
+      <div className="adm-panel adm-form-panel">
+        <p className="adm-panel-title">Content</p>
+        {main.map((f) => (
+          <FieldInput key={f.name} field={f} value={values[f.name]} set={set} upload={uploadImage} />
+        ))}
+      </div>
 
       {seo.length > 0 && (
-        <fieldset className="adm-seo">
-          <legend>SEO</legend>
+        <div className="adm-panel adm-form-panel">
+          <p className="adm-panel-title">SEO &amp; sharing</p>
           {seo.map((f) => (
             <FieldInput key={f.name} field={f} value={values[f.name]} set={set} upload={uploadImage} />
           ))}
-        </fieldset>
+        </div>
       )}
 
       {err ? <p className="adm-err">{err}</p> : null}
 
       <div className="adm-formactions">
         <button type="submit" disabled={busy}>
-          {busy ? 'Saving…' : 'Save'}
+          {busy ? 'Saving…' : 'Save changes'}
         </button>
         <button type="button" className="adm-cancel" onClick={() => router.push(`/admin/${collection.key}`)}>
           Cancel

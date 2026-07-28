@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCollection } from '@/lib/admin/collections';
 import { createSupabaseServer } from '@/lib/supabase/serverClient';
@@ -30,9 +31,16 @@ export default async function EditRecord({
 
   return (
     <div>
-      <h1 className="adm-h1">
-        {isNew ? `New ${col.singular.toLowerCase()}` : `Edit ${col.singular.toLowerCase()}`}
-      </h1>
+      <header className="adm-pagehead">
+        <div>
+          <Link href={`/admin/${col.key}`} className="adm-back">
+            ← {col.label}
+          </Link>
+          <h1 className="adm-h1">
+            {isNew ? `New ${col.singular.toLowerCase()}` : `Edit ${col.singular.toLowerCase()}`}
+          </h1>
+        </div>
+      </header>
       <RecordForm collection={col} record={record} isNew={isNew} />
     </div>
   );

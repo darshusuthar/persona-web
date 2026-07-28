@@ -31,7 +31,7 @@ const IAbout = () => (
 const items = [
   { href: '/', label: 'Home', Icon: IHome },
   { href: '/thoughts', label: 'Thoughts', Icon: IThoughts },
-  { href: '/podcast', label: 'Podcast', Icon: IPodcast },
+  { href: '/podcast', label: 'Library', Icon: IPodcast },
   { href: '/about', label: 'About', Icon: IAbout },
 ];
 

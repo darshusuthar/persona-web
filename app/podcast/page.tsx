@@ -24,7 +24,7 @@ export default async function PodcastPage() {
         <div className="wrap">
           <header className="th-hero pod-hero-c">
             <h1 className="pod-hero-title">
-              Conversations with leaders who&apos;ve made an impact.
+              Hosting conversations with leaders who&apos;ve made an impact.
             </h1>
             <p className="th-hero-sub">
               Candid talks with product, design, research and growth leaders — the real lessons

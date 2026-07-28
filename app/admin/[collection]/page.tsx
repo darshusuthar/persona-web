@@ -23,53 +23,74 @@ export default async function CollectionList({
       ascending: true,
     });
 
+  const count = rows?.length ?? 0;
+
   return (
     <div>
-      <div className="adm-listhead">
-        <h1 className="adm-h1">{col.label}</h1>
+      <header className="adm-pagehead">
+        <div>
+          <h1 className="adm-h1">{col.label}</h1>
+          <p className="adm-sub">
+            {count} {count === 1 ? col.singular.toLowerCase() : col.label.toLowerCase()}
+          </p>
+        </div>
         <Link href={`/admin/${col.key}/new`} className="adm-btn">
           + New {col.singular.toLowerCase()}
         </Link>
-      </div>
+      </header>
 
-      <table className="adm-table">
-        <thead>
-          <tr>
-            {col.listColumns.map((c) => (
-              <th key={c}>{c.replace(/_/g, ' ')}</th>
-            ))}
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {(rows ?? []).map((r) => {
-            const id = r[col.pk];
-            return (
-              <tr key={String(id)}>
-                {col.listColumns.map((c) => (
-                  <td key={c}>{String(r[c] ?? '')}</td>
-                ))}
-                <td className="adm-rowactions">
-                  <Link href={`/admin/${col.key}/${encodeURIComponent(String(id))}`}>Edit</Link>
-                  <DeleteButton
-                    table={col.table}
-                    pk={col.pk}
-                    id={id}
-                    label={String(r[col.titleField] ?? id)}
-                  />
+      <div className="adm-panel">
+        <table className="adm-table">
+          <thead>
+            <tr>
+              {col.listColumns.map((c) => (
+                <th key={c}>{c.replace(/_/g, ' ')}</th>
+              ))}
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {(rows ?? []).map((r) => {
+              const id = r[col.pk];
+              return (
+                <tr key={String(id)}>
+                  {col.listColumns.map((c, i) => {
+                    const val = r[c];
+                    let cell: React.ReactNode = String(val ?? '');
+                    if (c === 'status' && val) {
+                      cell = <span className={`adm-pill adm-pill-${val}`}>{String(val)}</span>;
+                    } else if (i === 0) {
+                      cell = <span className="adm-cell-title">{String(val ?? '')}</span>;
+                    }
+                    return <td key={c}>{cell}</td>;
+                  })}
+                  <td className="adm-rowactions">
+                    <Link
+                      href={`/admin/${col.key}/${encodeURIComponent(String(id))}`}
+                      className="adm-edit"
+                    >
+                      Edit
+                    </Link>
+                    <DeleteButton
+                      table={col.table}
+                      pk={col.pk}
+                      id={id}
+                      label={String(r[col.titleField] ?? id)}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+            {(!rows || rows.length === 0) && (
+              <tr>
+                <td colSpan={col.listColumns.length + 1} className="adm-empty">
+                  Nothing here yet. Click “New {col.singular.toLowerCase()}”.
                 </td>
               </tr>
-            );
-          })}
-          {(!rows || rows.length === 0) && (
-            <tr>
-              <td colSpan={col.listColumns.length + 1} className="adm-empty">
-                Nothing here yet. Click “New {col.singular.toLowerCase()}”.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

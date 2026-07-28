@@ -29,19 +29,30 @@ export default async function AboutPage() {
       <Nav />
       <main className="ab-main">
         <div className="wrap">
+          <header className="ab-intro">
+            <h1 className="ab-title">A builder who thinks in systems.</h1>
+            <div className="ab-lead">
+              <p>
+                I&apos;m Darshan. A designer by training, a builder by instinct, always curious
+                about how good things get made. I think in systems more than screens, and I&apos;d
+                rather understand why something exists than just make it look nice. Designer,
+                founder, host are really just different rooms I do the same thing in: find the real
+                problem, and shape something people actually feel.
+              </p>
+              <p>
+                What I believe is simple. Craft gets you in the room, but taste, judgment, and a
+                feel for the business are what keep you there. Good design isn&apos;t the prettiest
+                screen, it&apos;s the one that moves what actually matters. Under all of it sits one
+                belief I keep returning to: build. Make good things, help good people make them, and
+                stay curious enough to keep getting better.
+              </p>
+            </div>
+          </header>
+
           <div className="ab-banner">
             <img src={banner} alt="Darshan Suthar" />
           </div>
-          <header className="ab-intro">
-            <h1 className="ab-title">
-              A builder who thinks in systems.
-            </h1>
-            <p className="ab-sub">
-              Designer, founder and host — but underneath all of it, someone who can&apos;t help
-              taking things apart to understand how they work, then putting them back together
-              better.
-            </p>
-          </header>
+
           <section className="ab-versions">
             <p className="ab-eyebrow">A few versions of me</p>
             <div className="ab-chapters">
