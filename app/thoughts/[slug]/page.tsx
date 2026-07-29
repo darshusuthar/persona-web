@@ -62,11 +62,8 @@ export default async function ThoughtPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <Nav />
+      <Nav back />
       <article className="article">
-        <a href="/thoughts" className="article-back">
-          ← Thoughts
-        </a>
         <div className="article-head">
           {p.category ? <span className="note-cat">{p.category}</span> : null}
           <h1>{p.title}</h1>

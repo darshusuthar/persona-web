@@ -33,18 +33,14 @@ export default async function AboutPage() {
             <h1 className="ab-title">A builder who&apos;s obsessed with craft.</h1>
             <div className="ab-lead">
               <p>
-                I&apos;m Darshan. A designer by training, a builder by instinct, always curious
-                about how good things get made. I think in systems more than screens, and I&apos;d
-                rather understand why something exists than just make it look nice. Designer,
-                founder, host are really just different rooms I do the same thing in: find the real
-                problem, and shape something people actually feel.
+                I&apos;m Darshan. A designer by training, a builder by instinct. I think in systems
+                more than screens, and care more about why something exists than how it looks.
+                Designer, founder, host are just different rooms I do the same thing in.
               </p>
               <p>
-                What I believe is simple. Craft gets you in the room, but taste, judgment, and a
-                feel for the business are what keep you there. Good design isn&apos;t the prettiest
-                screen, it&apos;s the one that moves what actually matters. Under all of it sits one
-                belief I keep returning to: build. Make good things, help good people make them, and
-                stay curious enough to keep getting better.
+                Craft gets you in the room; taste, judgment, and business sense keep you there. Good
+                design isn&apos;t the prettiest screen, it&apos;s the one that moves what matters.
+                Underneath it all sits one belief: build.
               </p>
             </div>
           </header>

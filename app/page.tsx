@@ -89,7 +89,9 @@ export default async function Home() {
                 shortlist of proven talent — no one repeats the work.
               </p>
               <div className="ac-cta">
-                {false && <a href="/teem-fit">Read the story →</a>}
+                <a className="ac-story-btn" href="/teem-fit">
+                  The origin story →
+                </a>
                 <a href="https://www.teem.fit" target="_blank" rel="noopener">
                   Visit teem.fit ↗
                 </a>

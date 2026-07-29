@@ -35,7 +35,7 @@ const items = [
   { href: '/about', label: 'About', Icon: IAbout },
 ];
 
-export default function Nav() {
+export default function Nav({ back = false }: { back?: boolean }) {
   const path = usePathname() || '/';
   // Home is the default selection; it deselects only when another page matches.
   const current = ['/thoughts', '/podcast', '/about'].find(
@@ -64,10 +64,17 @@ export default function Nav() {
 
   return (
     <div className={`ap-nav${hidden ? ' nav-hidden' : ''}`} id="apNav">
+      {back && (
+        <Link href="/" className="ap-backbtn" aria-label="Back to home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </Link>
+      )}
       <div className="wrap">
         <div className="ap-right">
           {items.map(({ href, label, Icon }) => {
-            const active = href === '/' ? !current : href === current;
+            const active = back ? false : href === '/' ? !current : href === current;
             return (
               <Link key={href} href={href} className={active ? 'active' : ''}>
                 <span className="ap-ic">

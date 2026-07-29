@@ -1,15 +1,20 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import TeemReveal from '@/components/teem/TeemReveal';
+import TeemStack from '@/components/teem/TeemStack';
+import TeemVideos from '@/components/teem/TeemVideos';
 import { img } from '@/lib/media';
 import './teem.css';
 
 export const metadata = {
-  title: 'teem.fit — the founder story | Darshan Suthar',
+  title: 'teem.fit — a central repository for designers & hiring managers | Darshan Suthar',
   description:
-    'Why I built teem.fit: a centralised, pre-assessed database of designers that saves both designers and hiring managers from repeating the same work.',
+    'teem.fit is a central, pre-assessed repository of designers. Assess once, hire from a ranked shortlist. The founder story of why and how I built it.',
 };
 
-// Rounded image / placeholder. Drop an <img> in place of the label later.
+const HEADER_BG = img('teem-fit/teem-fit-header%20banner.png');
+
+// Rounded image / placeholder.
 function Shot({ label, src, alt = '' }: { label: string; src?: string; alt?: string }) {
   return (
     <div className="tf-shot">
@@ -18,228 +23,316 @@ function Shot({ label, src, alt = '' }: { label: string; src?: string; alt?: str
   );
 }
 
+// Video placeholder — swap for <video controls src="…" /> when the file is ready.
+function VideoSlot({ label, ratio = '16 / 9' }: { label: string; ratio?: string }) {
+  return (
+    <div className="tf-videoslot" style={{ aspectRatio: ratio }}>
+      <span className="tf-play" aria-hidden="true">
+        ▶
+      </span>
+      <span className="tf-videoslot-label">{label}</span>
+    </div>
+  );
+}
+
 export default function TeemFitPage() {
   return (
     <div className="tf-page">
-      <Nav />
-      <main className="tf-main">
-        <div className="tf-wrap">
-          <a href="/" className="tf-back">
-            ← Back
-          </a>
+      <Nav back />
 
-          {/* HERO — break */}
-          <header className="tf-hero">
-            <p className="tf-eyebrow">Founder story</p>
-            <h1 className="tf-title">teem.fit</h1>
-            <p className="tf-tagline">
-              India&apos;s home for pre-assessed designers. This is why I built it, and how it
-              actually works underneath.
-            </p>
-          </header>
-          <div className="tf-hero-shot">
-            <Shot label="Hero / product shot" src={img('media/Teem.fit%20Banner.png')} alt="teem.fit" />
+      {/* ===== HEADER (announcement) ===== */}
+      <header className="tf-announce" style={{ backgroundImage: `url("${HEADER_BG}")` }}>
+        <div className="tf-announce-inner">
+          <img className="tf-logo" src={img('teem-fit/teem-fit%20logo.png')} alt="teem.fit" />
+          <h1 className="tf-announce-title">A source of truth for designer and hiring manager</h1>
+          <div className="tf-announce-cta">
+            <a className="tf-cta-btn" href="https://www.teem.fit" target="_blank" rel="noopener">
+              Visit teem.fit ↗
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <main className="tf-main" id="story">
+        {/* ===== ACT 1 — THE GAP ===== */}
+        <div className="tf-wrap">
+          {/* mobile-only: title + CTA moved out of the header */}
+          <div className="tf-m-intro">
+            <h2 className="tf-m-title">A source of truth for designer and hiring manager</h2>
+            <a className="tf-cta-btn" href="https://www.teem.fit" target="_blank" rel="noopener">
+              Visit teem.fit ↗
+            </a>
           </div>
 
-          {/* PROBLEM — image left, content right */}
-          <section className="tf-section">
-            <div className="tf-row">
-              <div className="tf-row-media">
-                <Shot label="The old way: 4 rounds, every time" />
+          <section className="tf-section tf-reveal-sec">
+            <TeemReveal
+              paragraphs={[
+                'For over a decade I have designed inside big teams and hosted the leaders who hire designers. From both seats I kept seeing the same quiet waste: everyone re-proving the same thing, over and over.',
+                'Designers repeat their story for every role. Hiring managers re-screen from scratch every time. The same effort, spent again and again, just to reach the same trust from zero.',
+                'So I set out to build one central repository. One place that ends the repeating for designers, and the assessment guesswork for hiring managers.',
+              ]}
+            />
+          </section>
+
+        </div>
+
+        {/* approach — pinned card stack (full-bleed) */}
+        <TeemStack />
+
+        {/* ===== ACT 3 — THE PRODUCT (full-bleed dark) ===== */}
+        <section className="tf-inside">
+          <div className="tf-inside-inner">
+              <div className="tf-inside-head">
+                <h2 className="tf-inside-title">Inside teem.fit.</h2>
+                <p className="tf-inside-sub">
+                  One assessment captures who a designer is, the work they have done, and how they
+                  think, then turns it into something searchable.
+                </p>
               </div>
-              <div className="tf-row-text">
-                <h2 className="tf-h2">Great designers keep re-explaining themselves.</h2>
-                <p className="tf-p">
-                  More than a decade in design, working inside big multidisciplinary teams and, along
-                  the way, hosting conversations with design leaders on my podcast, kept surfacing
-                  the same quiet waste. Designers pour enormous time and energy into repeating their
-                  story, walking through their portfolio, and re-proving how they think, again and
-                  again, for every new process.
-                </p>
-                <p className="tf-p">
-                  The mirror image is just as painful for the hiring manager. To trust a single
-                  designer, they run the same gauntlet every time:
-                </p>
-                <div className="tf-rounds">
-                  <span className="tf-round">Screening</span>
-                  <span className="tf-round">Portfolio</span>
-                  <span className="tf-round">Case</span>
-                  <span className="tf-round">Whiteboarding</span>
+              <div className="tf-inside-art">
+                <img src={img('teem-fit/teem-fit-web-ui.png')} alt="teem.fit interface" />
+              </div>
+
+              <div className="tf-inside-grid">
+                <div className="tf-inside-item">
+                  <span className="tf-inside-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M4.5 20c0-4 3.5-6 7.5-6s7.5 2 7.5 6" />
+                    </svg>
+                  </span>
+                  <h3>The introduction</h3>
+                  <p>Who they are and how they frame themselves and their work, in their own words.</p>
+                </div>
+                <div className="tf-inside-item">
+                  <span className="tf-inside-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 3v5h5" />
+                      <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-5Z" />
+                    </svg>
+                  </span>
+                  <h3>Case-study walkthrough</h3>
+                  <p>The real decisions behind real work, not just the polished final screens.</p>
+                </div>
+                <div className="tf-inside-item">
+                  <span className="tf-inside-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z" />
+                    </svg>
+                  </span>
+                  <h3>On-prompt whiteboarding</h3>
+                  <p>A live, unseen prompt, so we see how they actually think and move in the moment.</p>
+                </div>
+                <div className="tf-inside-item">
+                  <span className="tf-inside-ic" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="7" />
+                      <path d="m21 21-4.3-4.3" />
+                    </svg>
+                  </span>
+                  <h3>Search &amp; filter</h3>
+                  <p>It all becomes a ranked repository a hiring manager can search and filter.</p>
+                </div>
+              </div>
+
+              <div className="tf-ai">
+                <p className="tf-ai-eyebrow">Leverage of AI</p>
+                <div className="tf-ai-grid">
+                  <div className="tf-ai-card">
+                    <div className="tf-ai-vis tf-ai-vis-a">
+                      <span className="tf-ai-pill">Intro clip</span>
+                      <span className="tf-ai-pill">Case study</span>
+                      <span className="tf-ai-pill">Whiteboarding</span>
+                      <span className="tf-ai-pill">Transcript</span>
+                    </div>
+                    <div className="tf-ai-text">
+                      <h3>Content automation</h3>
+                      <p>
+                        Every assessment produces raw media. AI shapes it into exactly what our
+                        system understands and needs, per designer and per assessment, so nothing
+                        gets prepped by hand.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="tf-ai-card">
+                    <div className="tf-ai-vis tf-ai-vis-b">
+                      <span className="tf-ai-ver">v0.1</span>
+                      <span className="tf-ai-arrow">→</span>
+                      <span className="tf-ai-ver">v0.2</span>
+                      <span className="tf-ai-arrow">→</span>
+                      <span className="tf-ai-ver">v0.3</span>
+                      <span className="tf-ai-arrow">→</span>
+                      <span className="tf-ai-ver is-live">v1.0</span>
+                    </div>
+                    <div className="tf-ai-text">
+                      <h3>Product iterations</h3>
+                      <p>
+                        Early on we changed the UI relentlessly, shipping and discarding, until the
+                        offering felt clear and seamless. AI let us prototype and iterate far faster
+                        than a small team otherwise could.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </section>
+
+        <div className="tf-wrap">
+          {/* comparison */}
+          <section className="tf-section tf-cmp-sec">
+            <div className="tf-cmp-head">
+              <h2 className="tf-h2 tf-center">Real comparison</h2>
+              <p className="tf-cmp-sub">The same goal, a very different path. Here they are side by side.</p>
+            </div>
+            <div className="tf-compare">
+              <div className="tf-cmp-card tf-cmp-old">
+                <p className="tf-cmp-tag">Traditional way</p>
+                <ul className="tf-cmp-list">
+                  <li>Re-pitch yourself for every role</li>
+                  <li>4 rounds before anyone trusts you</li>
+                  <li>Hiring managers screen from scratch, every time</li>
+                  <li>Great designers slip through on a bad day</li>
+                </ul>
+              </div>
+              <div className="tf-cmp-card tf-cmp-new">
+                <p className="tf-cmp-tag">Teem.fit way</p>
+                <ul className="tf-cmp-list">
+                  <li>Assessed once, discoverable forever</li>
+                  <li>One rigorous evaluation both sides trust</li>
+                  <li>Hire from a ranked, pre-vetted shortlist</li>
+                  <li>Signal over a single-interview gamble</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        {/* ===== VIDEOS (ad + designer announcement, tabbed) ===== */}
+        <TeemVideos />
+
+        {/* ===== HOW WE BUILT IT ===== */}
+        <div className="tf-wrap">
+          <section className="tf-section">
+            <h2 className="tf-h2 tf-center">Solved for both</h2>
+            <div className="tf-both2">
+              <div className="tf-both2-card">
+                <div className="tf-both2-text">
+                  <h3>
+                    Shortlisting for <br />
+                    hiring managers
+                  </h3>
+                  <p>Find the right designer fast, from a ranked, pre-vetted repository.</p>
+                  <p className="tf-both2-stat">
+                    <b>20+</b> teams onboarded
+                  </p>
+                </div>
+                <div className="tf-both2-img">
+                  <img src={img('teem-fit/hiring%20manager.png?v=2')} alt="Hiring manager" />
+                </div>
+              </div>
+              <div className="tf-both2-card alt">
+                <div className="tf-both2-text">
+                  <h3>Clarity &amp; opportunity for designers</h3>
+                  <p>
+                    An AI feedback report after each assessment: strengths, gaps, and what would
+                    help, in 2 to 3 days.
+                  </p>
+                  <p className="tf-both2-stat">
+                    <b>1,000+</b> designers onboarded
+                  </p>
+                </div>
+                <div className="tf-both2-img">
+                  <img src={img('teem-fit/designer.png?v=2')} alt="Designer" />
                 </div>
               </div>
             </div>
           </section>
 
-          {/* PULL QUOTE — break */}
-          <p className="tf-quote">
-            The same thinking, re-proven over and over. <span>Assess once. Trust everywhere.</span>
-          </p>
+          {false && (
+            <>
+          {/* ===== PROOF ===== */}
+          <section className="tf-section">
+            <h2 className="tf-h2">Voices from both sides.</h2>
+            <div className="tf-proof">
+              <figure className="tf-testi">
+                <blockquote>“Quote from a designer who got assessed goes here.”</blockquote>
+                <figcaption>
+                  <span className="tf-testi-name">Designer name</span>
+                  <span className="tf-testi-role">Product Designer</span>
+                </figcaption>
+              </figure>
+              <figure className="tf-testi">
+                <blockquote>“Quote from a hiring manager who used the shortlist goes here.”</blockquote>
+                <figcaption>
+                  <span className="tf-testi-name">Hiring manager name</span>
+                  <span className="tf-testi-role">Head of Design, Company</span>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
 
-          {/* INSIGHT — image left, content right */}
+          {/* ===== PODCAST TIE-IN ===== */}
           <section className="tf-section">
             <div className="tf-row">
               <div className="tf-row-media">
-                <Shot label="One profile, many teams" />
+                <VideoSlot label="Podcast clip — a leader on hiring pain" />
               </div>
               <div className="tf-row-text">
-                <h2 className="tf-h2">One assessment, trusted once, usable by everyone.</h2>
+                <h2 className="tf-h2">Leaders say it too.</h2>
                 <p className="tf-p">
-                  If a designer&apos;s thinking is captured properly one time, neither side should
-                  have to repeat it. That is the gap I kept seeing: a centralised, pre-assessed
-                  database of designers. One rigorous evaluation that both parties can rely on, so a
-                  lot of money and a lot of time simply stop being wasted.
+                  I did not arrive at this in a vacuum. Across dozens of conversations on the podcast,
+                  design and product leaders described the exact same hiring pain, in their own
+                  words.
                 </p>
                 <p className="tf-p">
-                  It is an effective solution for both ends of the table at the same time, which is
-                  rare, and exactly why it felt worth building.
+                  <a className="tf-inline-link" href="/podcast">
+                    Hear the conversations →
+                  </a>
                 </p>
               </div>
             </div>
           </section>
 
-          {/* APPROACH — image left, content right */}
+          {/* ===== FOUNDER NOTE ===== */}
           <section className="tf-section">
-            <div className="tf-row">
-              <div className="tf-row-media">
-                <Shot label="Process map / operating flow" />
-              </div>
-              <div className="tf-row-text">
-                <h2 className="tf-h2">Foundation first. Automate what should be automated.</h2>
+            <div className="tf-founder">
+              <Shot label="Photo of Darshan" />
+              <div className="tf-founder-text">
+                <h2 className="tf-h2">Why this one is personal.</h2>
                 <p className="tf-p">
-                  As a young startup I did not want to burn money, time, or people on work a good
-                  system can carry on its own. So with a small, lean team we mapped the whole thing
-                  end to end: how the process should run, where we can leverage software, and what
-                  the real touchpoints are, with plenty of back and forth on the operational side.
+                  A decade of design and years of hosting leaders taught me the same lesson from
+                  every angle: the way we vet designers wastes everyone. teem.fit is the product I
+                  most want to get right, built slowly and on purpose.
                 </p>
-                <p className="tf-p">
-                  All of that came before the fun part on purpose. A weak foundation always shows up
-                  later, so I wanted ours built strong first.
-                </p>
+                <p className="tf-founder-sign">Darshan</p>
               </div>
             </div>
           </section>
+            </>
+          )}
 
-          {/* IMAGE BAND — break */}
-          <div className="tf-band">Full-width image / behind the scenes</div>
-
-          {/* ASSESSMENT — break (full width, sub-sections) */}
-          <section className="tf-section">
-            <h2 className="tf-h2">Every designer is assessed across three moments.</h2>
-            <p className="tf-p" style={{ maxWidth: '60ch' }}>
-              To build a foundation worth trusting, one assessment has to cover who a designer is,
-              the work they have done, and how they actually think on their feet.
-            </p>
-            <div className="tf-steps">
-              <div className="tf-step">
-                <p className="tf-step-num">01</p>
-                <h3 className="tf-step-title">The introduction</h3>
-                <p className="tf-step-desc">
-                  Who they are and how they frame themselves and their work, in their own words.
-                </p>
-              </div>
-              <div className="tf-step">
-                <p className="tf-step-num">02</p>
-                <h3 className="tf-step-title">Case-study walkthrough</h3>
-                <p className="tf-step-desc">
-                  The real decisions behind real work, not just the polished final screens.
-                </p>
-              </div>
-              <div className="tf-step">
-                <p className="tf-step-num">03</p>
-                <h3 className="tf-step-title">On-prompt whiteboarding</h3>
-                <p className="tf-step-desc">
-                  A live, unseen prompt, so we can see how they actually think and move in the
-                  moment.
-                </p>
-              </div>
+          {/* ===== CLOSE — dual CTA ===== */}
+          {false && (
+          <section className="tf-section tf-paths-sec">
+            <h2 className="tf-h2 tf-center">Pick your side of the table.</h2>
+            <div className="tf-paths">
+              <a className="tf-path" href="https://www.teem.fit" target="_blank" rel="noopener">
+                <span className="tf-path-tag">For designers</span>
+                <span className="tf-path-title">Get assessed once.</span>
+                <span className="tf-path-cta">Join teem.fit →</span>
+              </a>
+              <a className="tf-path" href="https://www.teem.fit" target="_blank" rel="noopener">
+                <span className="tf-path-tag">For hiring teams</span>
+                <span className="tf-path-title">Hire from a ranked shortlist.</span>
+                <span className="tf-path-cta">Request access →</span>
+              </a>
             </div>
           </section>
-
-          {/* ENGINE — image left, content right */}
-          <section className="tf-section">
-            <div className="tf-row">
-              <div className="tf-row-media">
-                <Shot label="Searchable, filterable talent database" />
-              </div>
-              <div className="tf-row-text">
-                <h2 className="tf-h2">From a transcript to a searchable signal.</h2>
-                <p className="tf-p">
-                  The assessment is only half of it. Our algorithm reads the transcript itself and
-                  turns it into structured data points: where a designer was strong, where a gap
-                  showed, and where a little more evidence would have made the case. A rigorous,
-                  repeatable scoring line, not a gut call.
-                </p>
-                <p className="tf-p">
-                  Those points become a database a hiring manager can genuinely search and filter,
-                  so they land on the right shortlist instead of screening from scratch.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* FIRST VERSION — image left, content right */}
-          <section className="tf-section">
-            <div className="tf-row">
-              <div className="tf-row-media">
-                <Shot label="Hiring-manager view" />
-              </div>
-              <div className="tf-row-text">
-                <h2 className="tf-h2">Built for the hiring manager first.</h2>
-                <p className="tf-p">
-                  In v1 we deliberately did not let designers manage their own profiles. Not yet.
-                  The confidence in this system has to come from the enabler, and that is the hiring
-                  manager, the one who ultimately makes it work.
-                </p>
-                <p className="tf-p">
-                  So we own the quality end to end: we reach out to designers, find the right slots,
-                  and run the three-part assessment ourselves. Earn that trust first, and the rest of
-                  the platform can open up from there.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* IMPACT — break (full width) */}
-          <section className="tf-section">
-            <h2 className="tf-h2">Early, but the gap is real.</h2>
-            <p className="tf-p" style={{ maxWidth: '62ch' }}>
-              teem.fit is young, and I am building it the way I build everything: foundation first,
-              honestly. What I already see is that the problem is real on both sides, and a trusted,
-              pre-assessed shortlist changes the math for everyone. Less repetition for designers,
-              less screening for teams, more signal and less theatre.
-            </p>
-            <div className="tf-metrics">
-              <div>
-                <div className="tf-metric-num">—</div>
-                <div className="tf-metric-cap">Designers assessed</div>
-              </div>
-              <div>
-                <div className="tf-metric-num">—</div>
-                <div className="tf-metric-cap">Hiring rounds replaced</div>
-              </div>
-              <div>
-                <div className="tf-metric-num">—%</div>
-                <div className="tf-metric-cap">Screening time saved</div>
-              </div>
-              <div>
-                <div className="tf-metric-num">—</div>
-                <div className="tf-metric-cap">Teams onboarded</div>
-              </div>
-            </div>
-            <p className="tf-metric-note">Numbers to be filled in as we grow.</p>
-          </section>
-
-          {/* CLOSE — break */}
-          <section className="tf-close">
-            <h2 className="tf-h2">This one is personal.</h2>
-            <p className="tf-close-line">
-              It is the product I most want to get right, built slowly and on purpose. If it sounds
-              like something your team needs, come take a look.
-            </p>
-            <a className="tf-cta-btn" href="https://www.teem.fit" target="_blank" rel="noopener">
-              Visit teem.fit ↗
-            </a>
-          </section>
+          )}
         </div>
       </main>
       <Footer />
