@@ -99,7 +99,7 @@
 @media(max-width:860px){
   .tf-main{padding-top:36px}
   .tf-section{margin-top:72px}
-  .tf-announce{min-height:56vh;padding:78px 20px 0}
+  .tf-announce{min-height:34vh;padding:64px 20px 0}
   .tf-announce .tf-announce-title,.tf-announce .tf-announce-cta{display:none}
   .tf-m-intro{display:block;text-align:center;margin-top:36px}
   .tf-m-title{font-size:clamp(28px,7vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.08;color:var(--ink);margin:0}

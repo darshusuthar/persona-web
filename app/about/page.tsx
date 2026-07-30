@@ -17,38 +17,36 @@ export default async function AboutPage() {
     .select('*')
     .order('sort_order', { ascending: true });
 
-  const { data: bannerRow } = await supabase
-    .from('site_settings')
-    .select('value')
-    .eq('key', 'about_banner_url')
-    .maybeSingle();
-  const banner = bannerRow?.value || img('about%20hero.jpeg');
-
   return (
     <>
       <Nav />
       <main className="ab-main">
-        <div className="wrap">
-          <header className="ab-intro">
-            <h1 className="ab-title">A builder who&apos;s obsessed with craft.</h1>
-            <div className="ab-lead">
-              <p>
-                I&apos;m Darshan. A designer by training, a builder by instinct. I think in systems
-                more than screens, and care more about why something exists than how it looks.
-                Designer, founder, host are just different rooms I do the same thing in.
-              </p>
-              <p>
-                Craft gets you in the room; taste, judgment, and business sense keep you there. Good
-                design isn&apos;t the prettiest screen, it&apos;s the one that moves what matters.
-                Underneath it all sits one belief: build.
+        <section className="ab-hero">
+          <div className="ab-hero-glow" aria-hidden="true">
+            <span className="ab-glow-blob ab-glow-a" />
+            <span className="ab-glow-blob ab-glow-b" />
+            <span className="ab-glow-blob ab-glow-c" />
+            <span className="ab-glow-blob ab-glow-d" />
+            <span className="ab-glow-blob ab-glow-e" />
+          </div>
+          <div className="ab-hero-inner">
+            <div className="ab-hero-text">
+              <h1 className="ab-title">
+                A builder who <br />
+                loves art
+              </h1>
+              <p className="ab-sub">
+                A designer by training, a builder by instinct. I think in systems more than screens,
+                and care more about why something exists than how it looks.
               </p>
             </div>
-          </header>
-
-          <div className="ab-banner">
-            <img src={banner} alt="Darshan Suthar" />
+            <div className="ab-hero-art">
+              <img src={img('darshan-avtar.svg')} alt="Darshan Suthar" />
+            </div>
           </div>
+        </section>
 
+        <div className="wrap">
           <section className="ab-versions">
             <p className="ab-eyebrow">A few versions of me</p>
             <div className="ab-chapters">

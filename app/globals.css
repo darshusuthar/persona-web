@@ -1114,7 +1114,36 @@ img{max-width:100%}
    About page
    ============================================================ */
 .ab-page{background:var(--cream)}
-.ab-main{padding:104px 0 40px}
+.ab-main{padding:0 0 40px}
+
+/* About hero — avatar over mild moving colours */
+.ab-hero{position:relative;overflow:hidden;padding:116px 0 0}
+.ab-hero-glow{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ab-glow-blob{position:absolute;border-radius:50%;filter:blur(72px);will-change:transform}
+.ab-glow-a{width:36vw;height:36vw;left:4%;top:4%;background:rgba(255,190,140,.16);animation:ab-blobA 9s ease-in-out infinite alternate}
+.ab-glow-b{width:38vw;height:38vw;left:40%;top:-6%;background:rgba(170,156,255,.15);animation:ab-blobB 11s ease-in-out infinite alternate}
+.ab-glow-c{width:30vw;height:30vw;left:18%;top:46%;background:rgba(146,204,255,.15);animation:ab-blobC 8s ease-in-out infinite alternate}
+.ab-glow-d{width:32vw;height:32vw;left:60%;top:26%;background:rgba(156,228,204,.13);animation:ab-blobD 12s ease-in-out infinite alternate}
+.ab-glow-e{width:26vw;height:26vw;left:50%;top:6%;background:rgba(240,176,218,.13);animation:ab-blobE 10s ease-in-out infinite alternate}
+@keyframes ab-blobA{0%{transform:translate(-32%,-20%) scale(1)}100%{transform:translate(34%,24%) scale(1.22)}}
+@keyframes ab-blobB{0%{transform:translate(28%,-16%) scale(1.15)}100%{transform:translate(-30%,22%) scale(1)}}
+@keyframes ab-blobC{0%{transform:translate(-24%,20%) scale(1)}100%{transform:translate(30%,-22%) scale(1.25)}}
+@keyframes ab-blobD{0%{transform:translate(26%,16%) scale(1.1)}100%{transform:translate(-28%,-20%) scale(1)}}
+@keyframes ab-blobE{0%{transform:translate(-26%,-16%) scale(1)}100%{transform:translate(30%,22%) scale(1.2)}}
+.ab-hero-inner{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1.05fr;align-items:end;min-height:auto}
+.ab-hero-text{max-width:44ch;align-self:end;justify-self:end;text-align:right;padding-bottom:11vh}
+.ab-hero-text .ab-title{font-size:clamp(27px,3.3vw,46px)}
+.ab-hero-text .ab-sub{margin:16px 0 0 auto;max-width:40ch;font-size:clamp(14px,1.25vw,16.5px)}
+.ab-hero-art{align-self:end;justify-self:end}
+.ab-hero-art img{display:block;width:100%;max-width:min(62vw,960px);height:auto;margin-right:-24px;margin-bottom:0}
+@media(max-width:860px){
+  .ab-hero{padding:20px 0 0}
+  .ab-hero-inner{grid-template-columns:1fr;min-height:0;text-align:center;gap:8px}
+  .ab-hero-text{max-width:none;margin:0 auto;justify-self:center;text-align:center;align-self:auto;padding-bottom:0}
+  .ab-hero-text .ab-sub{margin:16px auto 0;max-width:46ch}
+  .ab-hero-art{justify-self:center}
+  .ab-hero-art img{max-width:300px;margin:18px auto 0;transform:translateX(30px)}
+}
 .ab-banner{width:100%;border-radius:26px;overflow:hidden;background:var(--cream-2);margin:56px 0 0}
 .ab-banner img{width:100%;height:auto;display:block}
 
