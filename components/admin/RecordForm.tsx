@@ -12,8 +12,35 @@ const blockId = () =>
     ? crypto.randomUUID()
     : `b_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
+// Split legacy markdown into blocks: every markdown image becomes its own
+// Image section, and the text before/between/after images becomes Text sections.
+// A standalone image on its own line (optionally the only thing in a paragraph)
+// is pulled out; inline images inside a text run are also lifted out.
+function markdownToBlocks(md: string): Block[] {
+  const blocks: Block[] = [];
+  const imgRe = /!\[([^\]]*)\]\(\s*([^\s)]+)(?:\s+"[^"]*")?\s*\)/g;
+
+  const pushText = (raw: string) => {
+    const t = raw.trim();
+    if (t) blocks.push({ id: blockId(), type: 'text', markdown: t });
+  };
+
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = imgRe.exec(md)) !== null) {
+    pushText(md.slice(last, m.index));
+    blocks.push({ id: blockId(), type: 'image', url: m[2], caption: m[1] || '' });
+    last = m.index + m[0].length;
+  }
+  pushText(md.slice(last));
+
+  if (blocks.length === 0) blocks.push({ id: blockId(), type: 'text', markdown: md.trim() });
+  return blocks;
+}
+
 // Ensure blocks fields are ready: give each block an id, and if there are no
-// blocks yet but legacy markdown `body` exists, seed it as the first Text section.
+// blocks yet but legacy markdown `body` exists, parse it into Text + Image
+// sections so every image lands in its own moveable block.
 function seedValues(collection: Collection, record: Values): Values {
   const init: Values = { ...record };
   const bf = collection.fields.find((f) => f.type === 'blocks');
@@ -21,7 +48,7 @@ function seedValues(collection: Collection, record: Values): Values {
     let blocks = Array.isArray(init[bf.name]) ? (init[bf.name] as Block[]) : [];
     blocks = blocks.map((b) => (b && (b as Block).id ? b : ({ ...b, id: blockId() } as Block)));
     if (blocks.length === 0 && typeof init.body === 'string' && init.body.trim()) {
-      blocks = [{ id: blockId(), type: 'text', markdown: init.body as string }];
+      blocks = markdownToBlocks(init.body as string);
     }
     init[bf.name] = blocks;
   }

@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import MdImage from '@/components/MdImage';
 
 type Block =
   | { id?: string; type: 'text'; markdown?: string }
@@ -44,16 +45,22 @@ function Embed({ src, title }: { src: string; title: string }) {
   );
 }
 
-export default function ThoughtBlocks({ blocks }: { blocks: Block[] }) {
+export default function ThoughtBlocks({
+  blocks,
+  className = 'prose tb',
+}: {
+  blocks: Block[];
+  className?: string;
+}) {
   return (
-    <div className="prose tb">
+    <div className={className}>
       {blocks.map((b, i) => {
         const key = b.id ?? i;
 
         if (b.type === 'text') {
           return (
             <div className="tb-text" key={key}>
-              <ReactMarkdown>{b.markdown || ''}</ReactMarkdown>
+              <ReactMarkdown components={{ img: MdImage }}>{b.markdown || ''}</ReactMarkdown>
             </div>
           );
         }

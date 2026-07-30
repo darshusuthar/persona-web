@@ -1,5 +1,14 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
 
 export const metadata: Metadata = {
   title: 'Darshan Suthar — Designer. Founder. Host.',
@@ -20,7 +29,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={poppins.variable}>
       <body>{children}</body>
     </html>
   );

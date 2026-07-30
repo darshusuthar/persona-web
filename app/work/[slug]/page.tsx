@@ -2,6 +2,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import ReactMarkdown from 'react-markdown';
 import MdImage from '@/components/MdImage';
+import ThoughtBlocks from '@/components/ThoughtBlocks';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import type { Metadata } from 'next';
@@ -69,7 +70,11 @@ export default async function CasePage({ params }: { params: Promise<{ slug: str
         ) : null}
       </header>
       <article className="cs-body">
-        <ReactMarkdown components={{ img: MdImage }}>{c.body || ''}</ReactMarkdown>
+        {Array.isArray(c.blocks) && c.blocks.length > 0 ? (
+          <ThoughtBlocks blocks={c.blocks} className="tb" />
+        ) : (
+          <ReactMarkdown components={{ img: MdImage }}>{c.body || ''}</ReactMarkdown>
+        )}
         <div className="cs-links"><a href="/">← Back to home</a></div>
       </article>
       <Footer />

@@ -23,7 +23,7 @@
   max-width: 20ch;
 }
 .lh-title .serif {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--font-poppins), sans-serif;
   font-style: italic;
   font-weight: 500;
 }
