@@ -31,10 +31,6 @@ export default async function AboutPage() {
           </div>
           <div className="ab-hero-inner">
             <div className="ab-hero-text">
-              <h1 className="ab-title">
-                A builder who <br />
-                loves art
-              </h1>
               <p className="ab-sub">
                 A designer by training, a builder by instinct. I think in systems more than screens,
                 and care more about why something exists than how it looks.

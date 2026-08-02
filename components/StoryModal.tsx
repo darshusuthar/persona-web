@@ -82,7 +82,7 @@ export default function StoryModal() {
   return (
     <>
       <button className="foot-story-btn" onClick={() => setOpen(true)}>
-        Behind this build
+        Behind this AI Build
       </button>
 
       <div className={`story-modal${open ? ' open' : ''}`} aria-hidden={!open}>

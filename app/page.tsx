@@ -2,6 +2,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import HeroCentered from '@/components/home/HeroCentered';
 import HeroSplit from '@/components/home/HeroSplit';
+import HeroWheel from '@/components/home/HeroWheel';
 import Testimonials from '@/components/home/Testimonials';
 import { createClient } from '@/lib/supabase/server';
 import { img } from '@/lib/media';
@@ -42,8 +43,9 @@ export default async function Home() {
     <>
       <Nav />
 
-      {/* HERO — swap <HeroCentered/> ↔ <HeroSplit/> to change the layout */}
-      <HeroCentered stats={stats ?? []} />
+      {/* HERO — active: <HeroWheel/>. Set false→true below to switch back. */}
+      <HeroWheel />
+      {false && <HeroCentered stats={stats ?? []} />}
       {false && <HeroSplit stats={stats ?? []} />}
 
       {/* CRAFT STORIES */}
@@ -53,17 +55,17 @@ export default async function Home() {
           <p className="k">A decade shaping products across fintech, commerce and SaaS.</p>
           <div className="work-cards">
             <a className="wcard cs-sensibull" href="/work/builder">
-              <img className="wc-logo" src={img('sensibull-logo.png')} alt="Sensibull" />
+              <img className="wc-logo" src={img('case-studies/SB%20Logo.png')} alt="Sensibull" />
               <span className="wc-title">Story of building a builder</span>
               <span className="wc-arrow" aria-hidden="true">↗</span>
             </a>
             <a className="wcard cs-meesho" href="/work/checkout">
-              <img className="wc-logo" src={img('meesho-logo.png')} alt="Meesho" />
+              <img className="wc-logo" src={img('case-studies/MS%20Logo.png')} alt="Meesho" />
               <span className="wc-title">Multi-Supplier Checkout Story</span>
               <span className="wc-arrow" aria-hidden="true">↗</span>
             </a>
             <a className="wcard cs-impact" href="/work/impactcraft">
-              <img className="wc-logo" src={img('impactcraft-logo.png')} alt="ImpactCraft" />
+              <img className="wc-logo" src={img('case-studies/IC%20Logo.png')} alt="ImpactCraft" />
               <span className="wc-title">Story of Redefining Patterns</span>
               <span className="wc-arrow" aria-hidden="true">↗</span>
             </a>

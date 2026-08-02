@@ -49,7 +49,11 @@ export default async function PodcastPage() {
                   className="pcast-thumb"
                   style={{ backgroundImage: e.thumb_url ? `url(${e.thumb_url})` : undefined }}
                 >
-                  <span className="pcast-play">Listen now</span>
+                  <span className="pcast-play" aria-label="Listen now">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+                      <path d="M8 5.5v13a1 1 0 0 0 1.53.85l10.5-6.5a1 1 0 0 0 0-1.7L9.53 4.65A1 1 0 0 0 8 5.5Z" />
+                    </svg>
+                  </span>
                 </div>
               </a>
             ))}

@@ -40,6 +40,18 @@ body{
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 
+/* ---------- route transitions ---------- */
+/* New page fades in once its content is loaded (template remounts per route). */
+.route-fade{animation:routeFadeIn .3s ease both}
+@keyframes routeFadeIn{from{opacity:0}to{opacity:1}}
+/* Current page fades out on click, before navigating. Opacity only, so the
+   fixed nav's positioning is unaffected. */
+html.route-leaving body{opacity:0;transition:opacity .18s ease}
+@media(prefers-reduced-motion:reduce){
+  .route-fade{animation:none}
+  html.route-leaving body{opacity:1;transition:none}
+}
+
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
 /* ---------- serif accent ---------- */
@@ -568,6 +580,39 @@ footer.foot-connect-sec{border-top:none}
 @media(max-width:860px){.hero-ap.hero-center .hero-grid{grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 30px}.hero-center .hero-stats{gap:14px 24px}}
 @media(max-width:860px){.ap.hero-ap.hero-center{padding-top:24px}}
 .ap.hero-ap{position:relative;height:auto;min-height:0;padding:12vh 0;box-sizing:border-box}
+/* Full-bleed hero banner */
+.hero-center.hero-banner{background-size:cover;background-position:center;background-repeat:no-repeat;min-height:52vh;display:flex;align-items:flex-start;padding-top:13vh;padding-bottom:7vh;overflow:hidden}
+.hero-banner .hero-banner-scrim{position:absolute;inset:0;background:rgba(0,0,0,.45);pointer-events:none;z-index:0}
+.hero-banner .wrap{position:relative;z-index:1}
+.hero-banner .hero-name{color:#fff}
+.hero-banner .k{color:rgba(255,255,255,.82)}
+/* Hero wheel (scroll-pinned cylindrical 3D photo wall) */
+.hero-wheel-track{position:relative;background:#fff;height:205vh}
+/* the section after the wheel rises over the settled-grid tail; z-index keeps its
+   header above the pinned wheel so it stays visible (desktop only) */
+@media(min-width:861px){.hero-wheel-track + .ap{position:relative;z-index:5;margin-top:-20vh}}
+.hero-wheel-pin{position:sticky;top:0;height:100vh;overflow:hidden;background:#fff}
+.hero-wheel-pin .hw-headwrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:13vh;z-index:4;pointer-events:none}
+.hero-wheel-pin .hw-head{text-align:center;transform-origin:center center;will-change:transform,opacity}
+.hero-wheel-pin .hw-head .hero-name{font-size:clamp(46px,6.6vw,98px);line-height:1;letter-spacing:-.03em;font-weight:700;color:var(--ink)}
+.hero-wheel-pin .hw-head .k{margin-top:16px;font-size:clamp(18px,1.9vw,25px)}
+.hw-stage{position:absolute;inset:0;perspective:1050px;perspective-origin:50% 50%;z-index:1}
+.hw-wheel{position:absolute;inset:0;transform-style:preserve-3d}
+.hw-card{position:absolute;top:50%;left:50%;border-radius:18px;background:#e7e7ea center/cover no-repeat;backface-visibility:hidden;will-change:transform,opacity}
+/* MOBILE hero (rendered only when JS detects a narrow viewport) */
+.hero-wheel-m{background:#fff;padding:26px 20px 40px;display:flex;flex-direction:column;align-items:center}
+.hwm-grid{width:100%;max-width:520px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hwm-cell{aspect-ratio:1;border-radius:18px;background:#e2e2e6 center/cover no-repeat;transition:opacity .42s ease}
+.hwm-head{text-align:center;margin-top:52px}
+.hwm-head .hero-name{font-size:clamp(34px,9vw,48px);line-height:1;letter-spacing:-.03em;font-weight:700;color:var(--ink);margin:0}
+.hwm-head .k{margin-top:12px;font-size:16px;color:var(--muted)}
+
+/* Memories section grid */
+.memories .hero-grid{width:100%;margin-top:34px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+/* Memories sits right above Craft stories — trim the gap between them */
+.memories{padding-bottom:64px}
+.ap.dark.ap-left#designer{padding-top:150px}
+@media(max-width:860px){.memories{padding:60px 0 40px}.memories .hero-grid{grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.ap.dark.ap-left#designer{padding-top:40px}}
 .hero-ap .hero-split{height:auto}
 .hero-ap .hero-grid{align-self:center;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch;justify-items:stretch}
 .hero-ap .hbox{aspect-ratio:1;min-height:0;height:auto;width:auto;margin:0}
@@ -694,6 +739,7 @@ footer.foot-connect-sec{border-top:none}
 @media(prefers-reduced-motion:reduce){.wcard::before,.wcard::after{animation:none}}
 .wcard:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.4)}
 .wcard .wc-logo{height:30px;width:auto;max-width:74%;object-fit:contain;object-position:left center}
+.wcard.cs-impact .wc-logo{height:46px}
 .wcard .wc-title{font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.05;max-width:9ch;color:rgba(255,255,255,.72)}
 .wcard .wc-arrow{position:absolute;top:22px;right:22px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);color:#1d1d1f;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;transform:scale(.8);transition:opacity .28s,transform .28s}
 .wcard:hover .wc-arrow{opacity:1;transform:scale(1)}
@@ -929,7 +975,8 @@ footer.foot-connect-sec{border-top:none}
 .pcast-card:hover{transform:translateY(-5px)}
 .pcast-thumb{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#e5e5e7;background-size:cover;background-position:center;box-shadow:none;transition:box-shadow .3s ease}
 .pcast-card:hover .pcast-thumb{box-shadow:0 20px 50px rgba(0,0,0,.16)}
-.pcast-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;background:#fff;color:#111;font-size:16px;font-weight:600;white-space:nowrap;opacity:0;transition:opacity .3s ease,transform .3s ease;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.pcast-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:999px;background:rgba(15,15,18,.55);color:#fff;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.35);opacity:0;transition:opacity .3s ease,transform .3s ease}
+.pcast-play svg{margin-left:3px}
 .pcast-card:hover .pcast-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .pcast-play .lp-ic{width:22px;height:22px;flex:0 0 auto}
 .pcast-name{margin-top:16px;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
@@ -1129,9 +1176,9 @@ img{max-width:100%}
 @keyframes ab-blobD{0%{transform:translate(26%,16%) scale(1.1)}100%{transform:translate(-28%,-20%) scale(1)}}
 @keyframes ab-blobE{0%{transform:translate(-26%,-16%) scale(1)}100%{transform:translate(30%,22%) scale(1.2)}}
 .ab-hero-inner{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1.05fr;align-items:end;min-height:auto}
-.ab-hero-text{max-width:44ch;align-self:end;justify-self:end;text-align:right;padding-bottom:11vh}
+.ab-hero-text{max-width:44ch;align-self:end;justify-self:end;text-align:right;padding-bottom:16vh}
 .ab-hero-text .ab-title{font-size:clamp(27px,3.3vw,46px);font-weight:500}
-.ab-hero-text .ab-sub{margin:16px 0 0 auto;max-width:40ch;font-size:clamp(14px,1.25vw,16.5px)}
+.ab-hero-text .ab-sub{margin:16px 0 0 auto;max-width:40ch;font-size:clamp(14px,1.25vw,16.5px);color:var(--ink)}
 .ab-hero-art{align-self:end;justify-self:end}
 .ab-hero-art img{display:block;width:100%;max-width:min(62vw,960px);height:auto;margin-right:-24px;margin-bottom:0}
 @media(max-width:860px){
