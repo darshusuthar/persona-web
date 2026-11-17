@@ -184,7 +184,7 @@ export default function HeroWheel() {
         </div>
         <div className="hwm-head">
           <h1 className="hero-name">Darshan Suthar</h1>
-          <p className="k">Designer. Founder. Host.</p>
+          <p className="k">Fintech &amp; consumer tech product designer</p>
         </div>
       </section>
     );
@@ -196,7 +196,7 @@ export default function HeroWheel() {
         <div className="hw-headwrap">
           <div className="hw-head" ref={headRef}>
             <h1 className="hero-name">Darshan Suthar</h1>
-            <p className="k">Designer. Founder. Host.</p>
+            <p className="k">Fintech &amp; consumer tech product designer</p>
           </div>
         </div>
         <div className="hw-stage">
