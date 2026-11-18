@@ -4,6 +4,8 @@ import HeroCentered from '@/components/home/HeroCentered';
 import HeroSplit from '@/components/home/HeroSplit';
 import HeroWheel from '@/components/home/HeroWheel';
 import Testimonials from '@/components/home/Testimonials';
+import CraftCards from '@/components/home/CraftCards';
+import FounderSection from '@/components/home/FounderSection';
 import { createClient } from '@/lib/supabase/server';
 import { img } from '@/lib/media';
 import './leaders.css';
@@ -53,76 +55,19 @@ export default async function Home() {
         <div className="wrap">
           <h2>Craft stories</h2>
           <p className="k">A decade shaping products across fintech, commerce and SaaS.</p>
-          <div className="work-cards">
-            <a className="wcard cs-sensibull" href="/work/builder">
-              <img className="wc-logo" src={img('case-studies/SB%20Logo.png')} alt="Sensibull" />
-              <span className="wc-title">Story of building a builder</span>
-              <span className="wc-arrow" aria-hidden="true">↗</span>
-            </a>
-            <a className="wcard cs-meesho" href="/work/checkout">
-              <img className="wc-logo" src={img('case-studies/MS%20Logo.png')} alt="Meesho" />
-              <span className="wc-title">Multi-Supplier Checkout Story</span>
-              <span className="wc-arrow" aria-hidden="true">↗</span>
-            </a>
-            <a className="wcard cs-impact" href="/work/impactcraft">
-              <img className="wc-logo" src={img('case-studies/IC%20Logo.png')} alt="ImpactCraft" />
-              <span className="wc-title">Story of Redefining Patterns</span>
-              <span className="wc-arrow" aria-hidden="true">↗</span>
-            </a>
-          </div>
+          <CraftCards />
           <Testimonials items={testi ?? []} />
         </div>
       </section>
 
-      {/* FOUNDER */}
-      <section className="ap" id="founder" data-nav="light">
-        <div className="wrap">
-          <div className="apps-head">
-            <h2>
-              Built what I believed in.
-            </h2>
-            <p className="apps-sub">Two ventures, with goal to addressed the core problem.</p>
-          </div>
-          <div className="apps-slider" id="appsSlider">
-            <div className="apps-card">
-              <div className="ac-name">teem.fit</div>
-              <p className="ac-desc">
-                India&apos;s biggest home for pre-assessed designers. Teams hire from a ranked
-                shortlist of proven talent — no one repeats the work.
-              </p>
-              <div className="ac-cta">
-                <a className="ac-story-btn" href="/teem-fit">
-                  The origin story →
-                </a>
-                <a href="https://www.teem.fit" target="_blank" rel="noopener">
-                  Visit teem.fit ↗
-                </a>
-              </div>
-              <img className="ac-img" src={img('media/Teem.fit%20Banner.png')} alt="teem.fit" />
-            </div>
-            <div className="apps-card">
-              <div className="ac-name">Produx Design Studio</div>
-              <p className="ac-desc">
-                Early and mid stage B2B SaaS faced challenge in finding a right design partner who
-                can solve the complex problem. That led me to build research-led, speed-obsessed,
-                early and mid-stage product design service.
-              </p>
-              <div className="ac-cta">
-                <a href="https://www.produxdesign.studio" target="_blank" rel="noopener">
-                  Explore PRODUX ↗
-                </a>
-              </div>
-              <img className="ac-img" src={img('media/Produx%20Banner.png')} alt="Produx Design Studio" />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* FOUNDER — "Built what I believed in." (teem.fit). Produx is not shown. */}
+      <FounderSection />
 
       {/* COMMUNITY — grid wall of leaders (replaces the podcast rows) */}
       <section className="leaders-hero" id="host" data-nav="dark">
         <div className="lh-inner">
           <h1 className="lh-title">
-            Hosting Tech Titans
+            Hosting tech titans
           </h1>
           <div className="lh-faces" aria-hidden="true">
             {GUESTS.map((f, i) => (

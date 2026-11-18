@@ -189,6 +189,7 @@ function FieldInput({
         <BlockEditor
           value={(value as Block[]) || []}
           onChange={(blocks) => set(field.name, blocks)}
+          types={field.blockTypes}
         />
       </div>
     );
@@ -197,6 +198,7 @@ function FieldInput({
   return (
     <label className="adm-field">
       <span>{field.label}</span>
+      {field.hint ? <small className="be-hint">{field.hint}</small> : null}
 
       {field.type === 'textarea' && (
         <textarea rows={4} value={v as string} onChange={(e) => set(field.name, e.target.value)} />

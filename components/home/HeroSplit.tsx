@@ -10,7 +10,7 @@ export default function HeroSplit({ stats }: { stats: Stat[] }) {
       <div className="wrap hero-split">
         <div className="hero-left">
           <h1 className="hero-name">Darshan Suthar</h1>
-          <p className="k">Fintech &amp; consumer tech product designer</p>
+          <p className="k">Hands-on product designer, mentor, and host</p>
           <HeroStats stats={stats} />
         </div>
         <HeroGrid />

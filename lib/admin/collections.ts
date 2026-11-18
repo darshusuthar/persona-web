@@ -1,3 +1,5 @@
+import { CASE_STUDY_BLOCKS, type BlockType } from '@/lib/blocks';
+
 export type FieldType =
   | 'text'
   | 'textarea'
@@ -15,6 +17,8 @@ export interface Field {
   type: FieldType;
   options?: string[];
   group?: 'main' | 'seo';
+  blockTypes?: BlockType[]; // for type 'blocks': which sections can be added
+  hint?: string;
 }
 
 export interface Collection {
@@ -81,8 +85,14 @@ export const COLLECTIONS: Collection[] = [
       { name: 'role', label: 'Role', type: 'text' },
       { name: 'year', label: 'Year', type: 'text' },
       { name: 'tools', label: 'Tools', type: 'text' },
-      { name: 'cover_url', label: 'Cover image', type: 'image' },
-      { name: 'blocks', label: 'Content', type: 'blocks' },
+      { name: 'tools_label', label: 'Label for "Tools" (e.g. Platform)', type: 'text' },
+      {
+        name: 'cover_url',
+        label: 'Cover image',
+        type: 'image',
+        hint: 'Hidden on the page when the content starts with a "Hero banner" Screens section.',
+      },
+      { name: 'blocks', label: 'Content', type: 'blocks', blockTypes: CASE_STUDY_BLOCKS },
       { name: 'body', label: 'Body (legacy markdown)', type: 'markdown' },
       STATUS,
       { name: 'sort_order', label: 'Sort order', type: 'number' },

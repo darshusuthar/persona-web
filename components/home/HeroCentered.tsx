@@ -16,7 +16,7 @@ export default function HeroCentered({ stats }: { stats: Stat[] }) {
       <div className="wrap">
         <div className="hc-head">
           <h1 className="hero-name">Darshan Suthar</h1>
-          <p className="k">Fintech &amp; consumer tech product designer</p>
+          <p className="k">Hands-on product designer, mentor, and host</p>
           {false && <HeroStats stats={stats} />}
         </div>
       </div>

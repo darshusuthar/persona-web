@@ -1,12 +1,33 @@
 'use client';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 // Intercepts clicks on internal links and fades the current page out before
-// navigating. The fade-in of the next page is handled by app/template.tsx once
-// its content has loaded. Renders nothing.
+// navigating, then fades the new page in once the URL has changed. Renders nothing.
+//
+// The fade-in can't rely on app/template.tsx alone: Next.js only re-mounts the
+// root template when the top-level segment changes, so /thoughts → /thoughts/x
+// kept the page invisible. Watching the pathname covers every depth.
+const LEAVING = 'route-leaving';
+let safety = 0;
+
 export default function RouteTransition() {
   const router = useRouter();
+  const pathname = usePathname();
+
+  // New URL is in place: clear the fade-out and replay the fade-in.
+  useEffect(() => {
+    const html = document.documentElement;
+    if (!html.classList.contains(LEAVING)) return;
+    window.clearTimeout(safety);
+    html.classList.remove(LEAVING);
+    const wrap = document.querySelector<HTMLElement>('.route-fade');
+    if (wrap) {
+      wrap.style.animation = 'none';
+      void wrap.offsetWidth; // restart the CSS animation
+      wrap.style.animation = '';
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const reduce =
@@ -52,8 +73,11 @@ export default function RouteTransition() {
         go();
         return;
       }
-      document.documentElement.classList.add('route-leaving');
+      document.documentElement.classList.add(LEAVING);
       window.setTimeout(go, 180);
+      // Never leave the page invisible if navigation stalls or only the query changes.
+      window.clearTimeout(safety);
+      safety = window.setTimeout(() => document.documentElement.classList.remove(LEAVING), 2500);
     };
 
     document.addEventListener('click', onClick, true);

@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { img } from '@/lib/media';
+import { useFadeCells, type FadeCell } from './useFadeCells';
 
 // --- sheet geometry (tweak to reshape) ---
 const COLS = 4;
-const ROWS = 6;
+const ROWS = 2; // two rows of photos; each cell cross-fades on its own random timer
 const CARD_W = 264; // sized so 4 cols fill the ~1112px container width
 const CARD_H = 264; // square
 const GAP_X = 18;
@@ -19,7 +20,7 @@ const FADE_SPAN = 1.1; // slots over which the top rows fade out
 
 const START_OFFSET = -1.05; // first row peeks a bit higher on load
 const END_OFFSET = ROWS - 1; // last row flattens to proper ratio
-const SETTLE_AT = 0.82; // fraction of scroll by which the grid is fully settled (then it dwells flat)
+const SETTLE_AT = 0.92; // fraction of scroll by which the grid is fully settled (then it dwells flat)
 const HEAD_BIG = 1.15; // name scale on load
 const HEAD_SMALL = 0.72; // name scale once it has shrunk
 const HEAD_SHRINK = 0.16; // fraction of scroll over which the name shrinks
@@ -32,9 +33,32 @@ const Z_PER = 90; // px toward the camera per slot below the band (perspective e
 const Z_CAP = 3.0; // cap how far cards come toward the camera (prevents runaway scaling/overlap)
 const BOT_FADE_AT = 5.0; // slots below the band where incoming rows fade in from nothing
 
-const IMAGES = Array.from({ length: COLS * ROWS }, (_, i) => img(`media/hero-${i + 1}.jpg`));
+// Photo pool the cells draw from (more photos than cells, so each swap is fresh).
+const POOL = Array.from({ length: 24 }, (_, i) => img(`media/hero-${i + 1}.jpg`));
+const CELLS = COLS * ROWS;
+
+function Layers({ cell }: { cell: FadeCell }) {
+  return (
+    <>
+      <span className="hw-layer" style={{ backgroundImage: `url(${cell.a})`, opacity: cell.showB ? 0 : 1 }} />
+      <span className="hw-layer" style={{ backgroundImage: `url(${cell.b})`, opacity: cell.showB ? 1 : 0 }} />
+    </>
+  );
+}
 const colX = (col: number) => (col - (COLS - 1) / 2) * (CARD_W + GAP_X);
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+
+function Glow() {
+  return (
+    <div className="hw-glow" aria-hidden="true">
+      <span className="hw-glow-blob hw-glow-a" />
+      <span className="hw-glow-blob hw-glow-b" />
+      <span className="hw-glow-blob hw-glow-c" />
+      <span className="hw-glow-blob hw-glow-d" />
+      <span className="hw-glow-blob hw-glow-e" />
+    </div>
+  );
+}
 
 export default function HeroWheel() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -51,30 +75,9 @@ export default function HeroWheel() {
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  // mobile 2×2 grid: four photos that fade + shuffle
-  const [mobImgs, setMobImgs] = useState<string[]>(IMAGES.slice(0, 4));
-  const [mobOp, setMobOp] = useState<number[]>([1, 1, 1, 1]);
-  useEffect(() => {
-    if (!window.matchMedia('(max-width:860px)').matches) return;
-    let slot = 0;
-    const id = window.setInterval(() => {
-      const s = slot % 4;
-      slot++;
-      setMobOp((o) => o.map((v, i) => (i === s ? 0 : v)));
-      window.setTimeout(() => {
-        setMobImgs((prev) => {
-          const used = new Set(prev);
-          const avail = IMAGES.filter((u) => !used.has(u));
-          const pick = avail.length
-            ? avail[Math.floor(Math.random() * avail.length)]
-            : IMAGES[Math.floor(Math.random() * IMAGES.length)];
-          return prev.map((v, i) => (i === s ? pick : v));
-        });
-        setMobOp((o) => o.map((v, i) => (i === s ? 1 : v)));
-      }, 420);
-    }, 2400);
-    return () => window.clearInterval(id);
-  }, []);
+  // desktop: two rows of cells; mobile: a 2×2 grid. Both cross-fade at random.
+  const cells = useFadeCells(POOL, CELLS);
+  const mobCells = useFadeCells(POOL, 4);
 
   useEffect(() => {
     let raf = 0;
@@ -96,7 +99,7 @@ export default function HeroWheel() {
       // reach the settled state by SETTLE_AT, then hold it flat for the remaining scroll
       const prog = clamp01(p / SETTLE_AT);
       const offset = START_OFFSET + prog * (END_OFFSET - START_OFFSET);
-      for (let i = 0; i < IMAGES.length; i++) {
+      for (let i = 0; i < CELLS; i++) {
         const el = cardsRef.current[i];
         if (!el) continue;
         const col = i % COLS;
@@ -173,18 +176,17 @@ export default function HeroWheel() {
   if (isMobile) {
     return (
       <section className="hero-wheel-m" data-nav="light">
+        <Glow />
         <div className="hwm-grid">
-          {mobImgs.map((src, i) => (
-            <div
-              key={i}
-              className="hwm-cell"
-              style={{ backgroundImage: `url(${src})`, opacity: mobOp[i] }}
-            />
+          {mobCells.map((cell, i) => (
+            <div key={i} className="hwm-cell">
+              <Layers cell={cell} />
+            </div>
           ))}
         </div>
         <div className="hwm-head">
           <h1 className="hero-name">Darshan Suthar</h1>
-          <p className="k">Fintech &amp; consumer tech product designer</p>
+          <p className="k">Hands-on product designer, mentor, and host</p>
         </div>
       </section>
     );
@@ -193,23 +195,26 @@ export default function HeroWheel() {
   return (
     <section className="hero-wheel-track" ref={trackRef}>
       <div className="hero-wheel-pin" data-nav="light">
+        <Glow />
         <div className="hw-headwrap">
           <div className="hw-head" ref={headRef}>
             <h1 className="hero-name">Darshan Suthar</h1>
-            <p className="k">Fintech &amp; consumer tech product designer</p>
+            <p className="k">Hands-on product designer, mentor, and host</p>
           </div>
         </div>
         <div className="hw-stage">
           <div className="hw-wheel">
-            {IMAGES.map((src, i) => (
+            {cells.map((cell, i) => (
               <div
                 key={i}
                 className="hw-card"
                 ref={(el) => {
                   cardsRef.current[i] = el;
                 }}
-                style={{ width: CARD_W, height: CARD_H, backgroundImage: `url(${src})` }}
-              />
+                style={{ width: CARD_W, height: CARD_H }}
+              >
+                <Layers cell={cell} />
+              </div>
             ))}
           </div>
         </div>
