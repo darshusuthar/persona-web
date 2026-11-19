@@ -42,9 +42,15 @@ export default function Nav({ back = false }: { back?: boolean }) {
     (h) => path === h || path.startsWith(h + '/')
   );
   // The back button goes up one level: a thought returns to the Thoughts list,
+  // a case study returns to the "Shipped work" section on the home page,
   // anything else returns home.
-  const backHref = path.startsWith('/thoughts/') ? '/thoughts' : '/';
-  const backLabel = backHref === '/thoughts' ? 'Back to Thoughts' : 'Back to home';
+  const backHref = path.startsWith('/thoughts/')
+    ? '/thoughts'
+    : path.startsWith('/work/')
+      ? '/#designer'
+      : '/';
+  const backLabel =
+    backHref === '/thoughts' ? 'Back to Thoughts' : backHref === '/#designer' ? 'Back to Shipped work' : 'Back to home';
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {

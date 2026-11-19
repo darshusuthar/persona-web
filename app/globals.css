@@ -1614,3 +1614,8 @@ html:has(.hl:not(.hl-out)) .hw-stage,html:has(.hl:not(.hl-out)) .hwm-grid{opacit
   .hw-stage,.hwm-grid{transition:opacity .6s ease .8s}
   html:has(.hl:not(.hl-out)) .hw-stage,html:has(.hl:not(.hl-out)) .hwm-grid{transform:none}
 }
+
+/* case study header: the body back link is gone (the nav has the back button now),
+   so the hero keeps the same top spacing on its own */
+.cs-hero{padding-top:160px}
+@media(max-width:860px){.cs-hero{padding-top:96px}}

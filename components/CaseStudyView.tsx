@@ -20,12 +20,7 @@ export default function CaseStudyView({ c }: { c: Record<string, any> }) {
 
   return (
     <>
-      <Nav />
-      <div className="cs-top">
-        <div className="wrap">
-          <a className="cs-back" href="/">← Back to home</a>
-        </div>
-      </div>
+      <Nav back />
       <header className="cs-hero">
         <div className="wrap">
           {c.eyebrow ? <p className="cs-eyebrow">{c.eyebrow}</p> : null}

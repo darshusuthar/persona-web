@@ -10,7 +10,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 // fades away,
 // revealing the hero, whose heading sits exactly under the loader's text.
 //
-// Shown once per visit: navigating back to home inside the site skips it.
+// Shown only when the browser loads the home page itself, once per visit:
+// arriving at home from any other page on the site skips it.
 
 const MIN_MS = 4000; // minimum time on the loading screen
 const MAX_MS = 10000; // never hold visitors longer than this, even if a slow image is still loading
@@ -20,6 +21,20 @@ const FADE_DELAY = 1100;
 const NAME = 'Darshan Suthar';
 
 let shownThisVisit = false;
+
+// Only show on a real page load of the home page — never when arriving at home from
+// another page on the site (e.g. the case study back button), even if the visit
+// started elsewhere. On the server this is always a real load of "/".
+function isFreshHomeLoad(): boolean {
+  if (typeof window === 'undefined') return true;
+  const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  if (!nav) return true;
+  try {
+    return new URL(nav.name).pathname === '/';
+  } catch {
+    return true;
+  }
+}
 
 type Box = { cx: number; cy: number; size: number; spacing: number };
 
@@ -39,7 +54,9 @@ function measureHeading(): Box | null {
 }
 
 export default function HomeLoader() {
-  const [phase, setPhase] = useState<'loading' | 'filling' | 'done'>(shownThisVisit ? 'done' : 'loading');
+  const [phase, setPhase] = useState<'loading' | 'filling' | 'done'>(() =>
+    shownThisVisit || !isFreshHomeLoad() ? 'done' : 'loading'
+  );
   const [box, setBox] = useState<Box | null>(null);
   const started = useRef(performance.now());
 
