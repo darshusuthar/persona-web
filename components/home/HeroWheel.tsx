@@ -5,7 +5,7 @@ import { useFadeCells, type FadeCell } from './useFadeCells';
 
 // --- sheet geometry (tweak to reshape) ---
 const COLS = 4;
-const ROWS = 2; // two rows of photos; each cell cross-fades on its own random timer
+const ROWS = 1; // one row of photos; each cell cross-fades on its own random timer
 const CARD_W = 264; // sized so 4 cols fill the ~1112px container width
 const CARD_H = 264; // square
 const GAP_X = 18;
@@ -21,10 +21,26 @@ const FADE_SPAN = 1.1; // slots over which the top rows fade out
 const START_OFFSET = -1.05; // first row peeks a bit higher on load
 const END_OFFSET = ROWS - 1; // last row flattens to proper ratio
 const SETTLE_AT = 0.92; // fraction of scroll by which the grid is fully settled (then it dwells flat)
+// Intro: on load the row is shown larger (close to the full window width). It
+// shrinks back to normal size while it scrolls and curls with the wheel motion,
+// reaching 1× at GROW_END, then the wheel motion carries on as before.
+const GROW_END = 0.45; // fraction of scroll by which the row is back to 1× (runs alongside the wheel)
+const GROW_GUTTER = 48; // px kept free at the window edges at the big size
+const GROW_MIN = 1.25; // always at least 25% bigger on load (on laptop widths the outer photos run past the edges, then shrink into frame)
+// At the start position the row is tilted toward the camera, which already makes it
+// ~17–21% wider on screen than its flat width (more when scaled up); measured, so the big size fits the window.
+const START_PERSPECTIVE = 1.22;
+const GROW_MAX = 1.6; // never more than this on very wide screens
+// The hero used to inherit the site-wide `section{padding:76px 0}`, which kept the
+// stage from pinning for the first 76px of scroll (everything jumped up, then
+// slowed). The padding is removed in CSS; this keeps the same load position and
+// eases the 76px out over the whole scroll so the motion is one steady glide.
+const LOAD_SHIFT = 76;
 const HEAD_BIG = 1.15; // name scale on load
 const HEAD_SMALL = 0.72; // name scale once it has shrunk
-const HEAD_SHRINK = 0.16; // fraction of scroll over which the name shrinks
-const HEAD_LEAVE = 0.3; // fraction of scroll by which the name has risen up and out
+const HEAD_SHRINK = 0.28; // fraction of scroll over which the name shrinks
+const HEAD_LEAVE = 0.55; // fraction of scroll by which the name has risen up and out
+const HEAD_FADE = 0.2; // fraction of scroll over which the name fades, after it has shrunk
 
 const SPREAD = 25; // how much the row spacing widens per slot deeper (gradual elastify)
 const ROT_PER = 26; // deg of curl added per slot below the band
@@ -91,12 +107,23 @@ export default function HeroWheel() {
         const shrink = clamp01(p / HEAD_SHRINK);
         const rise = clamp01(p / HEAD_LEAVE);
         const s = HEAD_BIG - (HEAD_BIG - HEAD_SMALL) * shrink;
-        const up = rise * window.innerHeight * 0.62; // rises up and out
+        const up = rise * window.innerHeight * 0.62 - LOAD_SHIFT * (1 - rise); // rises up and out
         head.style.transform = `translateY(${-up}px) scale(${s})`;
-        head.style.opacity = String(Math.max(0, 1 - clamp01((p - HEAD_SHRINK) / 0.12)));
+        head.style.opacity = String(Math.max(0, 1 - clamp01((p - HEAD_SHRINK) / HEAD_FADE)));
       }
 
-      // reach the settled state by SETTLE_AT, then hold it flat for the remaining scroll
+      // The row shrinks from its big load size to 1× while the wheel motion runs,
+      // so both follow the scroll together.
+      const rowW = COLS * CARD_W + (COLS - 1) * GAP_X;
+      const big = Math.min(
+        GROW_MAX,
+        Math.max(GROW_MIN, (window.innerWidth - GROW_GUTTER) / (rowW * START_PERSPECTIVE))
+      );
+      const grow = clamp01(p / GROW_END);
+      const ease = grow * grow * (3 - 2 * grow); // smooth start and end, tracks the scroll
+      const sc = big + (1 - big) * ease;
+
+      // wheel motion from the first pixel of scroll; settled by SETTLE_AT, then holds flat
       const prog = clamp01(p / SETTLE_AT);
       const offset = START_OFFSET + prog * (END_OFFSET - START_OFFSET);
       for (let i = 0; i < CELLS; i++) {
@@ -125,7 +152,8 @@ export default function HeroWheel() {
           if (u > BOT_FADE_AT) op = clamp01(1 - (u - BOT_FADE_AT) / 1.3);
         }
 
-        el.style.transform = `translate(-50%,-50%) translate3d(${colX(col)}px, ${y}px, ${z}px) rotateX(${rot}deg)`;
+        y += LOAD_SHIFT * (1 - prog); // same load position as before, glides out with the scroll
+        el.style.transform = `translate(-50%,-50%) translate3d(${colX(col) * sc}px, ${y}px, ${z}px) rotateX(${rot}deg) scale(${sc})`;
         el.style.opacity = String(op);
         el.style.zIndex = String(2000 + Math.round(y)); // nearer/lower rows draw on top
       }

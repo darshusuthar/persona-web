@@ -5,6 +5,7 @@ import HeroSplit from '@/components/home/HeroSplit';
 import HeroWheel from '@/components/home/HeroWheel';
 import Testimonials from '@/components/home/Testimonials';
 import CraftCards from '@/components/home/CraftCards';
+import HomeLoader from '@/components/home/HomeLoader';
 import FounderSection from '@/components/home/FounderSection';
 import { createClient } from '@/lib/supabase/server';
 import { img } from '@/lib/media';
@@ -43,6 +44,7 @@ export default async function Home() {
 
   return (
     <>
+      <HomeLoader />
       <Nav />
 
       {/* HERO — active: <HeroWheel/>. Set false→true below to switch back. */}
