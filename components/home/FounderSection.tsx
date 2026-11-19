@@ -141,23 +141,12 @@ export default function FounderSection() {
             </div>
             <h3 className="fd-h3">
               Prove it once.
-              <br />
-              Get seen by every team.
+              <span className="fd-h3-sub">Get seen by every team.</span>
             </h3>
             <p className="fd-desc">
               India&apos;s biggest home for pre-assessed designers. Teams hire from a ranked shortlist of proven talent,
               so no one repeats the work.
             </p>
-            <div className="fd-compare">
-              <div className="old">
-                <small>The usual way</small>
-                <b>4 rounds before anyone trusts you</b>
-              </div>
-              <div className="new">
-                <small>With teem.fit</small>
-                <b>One assessment, searchable by every hiring team</b>
-              </div>
-            </div>
             <div className="fd-cta">
               <a className="fd-btn pri" href="/teem-fit">
                 The origin story <span className="ar">→</span>

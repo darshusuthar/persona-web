@@ -1499,6 +1499,7 @@ img{max-width:100%}
 @keyframes fd-live{50%{box-shadow:0 0 0 6px rgba(76,175,106,0)}}
 .fd-h3{font-size:clamp(32px,3.6vw,50px);line-height:1.02;letter-spacing:-.035em;margin:0;font-weight:600}
 .fd-grad{background:linear-gradient(90deg,var(--fd1),var(--fd2),var(--fd3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.fd-h3-sub{display:block;margin-top:10px;font-size:.56em;line-height:1.15;letter-spacing:-.02em}
 .fd-desc{color:var(--muted);font-size:16px;line-height:1.65;margin:18px 0 0;max-width:44ch}
 .fd-compare{margin:30px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .fd-compare div{background:#fff;border:1px solid var(--fd-line);border-radius:18px;padding:16px 18px}
@@ -1600,4 +1601,16 @@ html:has(.hl:not(.hl-out)),html:has(.hl:not(.hl-out)) body,html.hl-lock,html.hl-
   .hl .hw-glow-c{width:64vw;height:64vw;left:16%;top:8%}
   .hl .hw-glow-d{width:70vw;height:70vw;left:-6%;top:62%}
   .hl .hw-glow-e{width:60vw;height:60vw;left:44%;top:18%}
+}
+
+/* ---- hero photos enter with the loader hand-off: fade in while rising into place ----
+   While the loader is up (and not yet handing off), the photo stage waits 90px lower and
+   invisible. When the hand-off starts (.hl-out), it rises to its normal position and
+   perspective as the loading layer fades away. No loader (e.g. coming back from another
+   page) means no animation: the rule never matches. */
+.hw-stage,.hwm-grid{transition:opacity 1.3s cubic-bezier(.4,0,.2,1) .8s,transform 1.6s cubic-bezier(.22,.61,.36,1) .8s}
+html:has(.hl:not(.hl-out)) .hw-stage,html:has(.hl:not(.hl-out)) .hwm-grid{opacity:0;transform:translateY(90px)}
+@media (prefers-reduced-motion:reduce){
+  .hw-stage,.hwm-grid{transition:opacity .6s ease .8s}
+  html:has(.hl:not(.hl-out)) .hw-stage,html:has(.hl:not(.hl-out)) .hwm-grid{transform:none}
 }
