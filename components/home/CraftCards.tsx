@@ -29,33 +29,33 @@ const CARDS: {
     key: 'aspora',
     cls: 'cs-aspora',
     href: '/work/gold-sip',
-    title: 'Turning gold into a weekly habit',
+    title: 'From one-time gold buys to a weekly habit',
     logo: { src: img('case-studies/aspora-logo%20(1).png'), alt: 'Aspora' },
-    brand: { base: '#8a6220', g1: '#d9ae5f', g2: '#5a3d10', acc: '#ffe2a1', pop: '#fff3cf', ink: '#e3b45a' },
+    brand: { base: '#8a6220', g1: '#d9ae5f', g2: '#5a3d10', acc: '#ffe2a1', pop: '#fff3cf', ink: '#c8a66a' },
   },
   {
     key: 'impact',
     cls: 'cs-impact',
     href: '/work/impactcraft',
-    title: 'Story of redefining patterns',
+    title: 'Turning a data dump into a daily priority feed',
     logo: { src: img('case-studies/IC%20Logo.png'), alt: 'ImpactCraft' },
-    brand: { base: '#4ba0d8', g1: '#96d4f7', g2: '#2a72af', acc: '#e3f6ff', pop: '#b9f0ff', ink: '#4fb2ff' },
+    brand: { base: '#4ba0d8', g1: '#96d4f7', g2: '#2a72af', acc: '#e3f6ff', pop: '#b9f0ff', ink: '#6e9fcf' },
   },
   {
     key: 'meesho',
     cls: 'cs-meesho',
     href: '/work/checkout',
-    title: 'Multi-supplier checkout story',
+    title: 'Multiple supplier SKUs checkout',
     logo: { src: img('case-studies/MS%20Logo.png'), alt: 'Meesho' },
-    brand: { base: '#48102c', g1: '#8e2059', g2: '#280716', acc: '#ff6fb5', pop: '#ffc2e1', ink: '#ff4fa3' },
+    brand: { base: '#48102c', g1: '#8e2059', g2: '#280716', acc: '#ff6fb5', pop: '#ffc2e1', ink: '#cf7aa6' },
   },
   {
     key: 'sensibull',
     cls: 'cs-sensibull',
     href: '/work/builder',
-    title: 'Story of building a builder',
+    title: 'Redesigning the heart of options trading',
     logo: { src: img('case-studies/SB%20Logo.png'), alt: 'Sensibull' },
-    brand: { base: '#e4531f', g1: '#f89a5c', g2: '#be370f', acc: '#ffd2ad', pop: '#ffe7a8', ink: '#ff6a2c' },
+    brand: { base: '#e4531f', g1: '#f89a5c', g2: '#be370f', acc: '#ffd2ad', pop: '#ffe7a8', ink: '#d5825d' },
   },
 ];
 
@@ -70,9 +70,13 @@ const TAU = Math.PI * 2;
 // Dark grey behind each story motif; the motif itself is drawn in the brand accent.
 const WIN_BG = '#1e1e21';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// Motifs are kept quiet: muted accents, painted at reduced strength over the background.
+const MOTIF_ALPHA = 0.55;
 function fill(ctx: CanvasRenderingContext2D, w: number, h: number, _b: Brand) {
+  ctx.globalAlpha = 1;
   ctx.fillStyle = WIN_BG;
   ctx.fillRect(0, 0, w, h);
+  ctx.globalAlpha = MOTIF_ALPHA;
 }
 
 // ---------- scenes ----------
@@ -82,7 +86,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
     return (t) => {
       const { ctx, w, h } = o;
       fill(ctx, w, h, b);
-      const N = Math.max(12, Math.round(w / 22));
+      const N = Math.max(9, Math.round(w / 40)); // sparse: fewer weekly drops
       const K = 2.2;
       const X = (i: number) => -w * 0.02 + (i / (N - 1)) * w * 1.04; // edge to edge
       const Y = (i: number) => {
@@ -135,7 +139,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
         ctx.stroke();
         ctx.fillStyle = rgba(b.ink, 0.85 * fade);
         ctx.beginPath();
-        ctx.arc(x, y, 2.1, 0, TAU);
+        ctx.arc(x, y, 1.8, 0, TAU);
         ctx.fill();
         const r = age - FALL;
         if (r < 0.6) {
@@ -269,7 +273,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
       ctx.moveTo(M[0], M[1]);
       ctx.lineTo(w + 10, M[1]);
       ctx.stroke();
-      if (t - last > (m.in ? 0.14 : 0.34)) {
+      if (t - last > (m.in ? 0.3 : 0.7)) { // sparse: fewer orders in flight
         last = t;
         P.push({ s: Math.floor(Math.random() * SRC.length), u: 0, sp: 0.28 + Math.random() * 0.12, pink: Math.random() < 0.35 });
       }
@@ -294,7 +298,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
         }
         ctx.fillStyle = q.pink ? rgba(b.acc, 0.95) : rgba(b.ink, 0.85);
         ctx.beginPath();
-        ctx.arc(x, y, q.u < 1 ? 2 : 2.4, 0, TAU);
+        ctx.arc(x, y, q.u < 1 ? 1.7 : 2, 0, TAU);
         ctx.fill();
       }
       for (let i = hits.length - 1; i >= 0; i--) {
@@ -319,7 +323,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
 
   // A loose network that periodically settles into a new pattern.
   impact(b, o, m) {
-    const N = 36;
+    const N = 18; // sparse network
     // deterministic start so SSR/first paint is stable
     let seed = 7;
     const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
@@ -335,13 +339,13 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
       const dt = Math.min(0.05, t - (lt || t));
       lt = t;
       fill(ctx, w, h, b);
-      const ph = t % 9, pattern = ph > 5 && ph < 8.2, cols = 9, rows = 4;
+      const ph = t % 9, pattern = ph > 5 && ph < 8.2, cols = 6, rows = 3;
       nodes.forEach((n, i) => {
         if (pattern) {
           const cx = i % cols, cy = Math.floor(i / cols) % rows;
           // pattern runs edge to edge (outer nodes sit just past the frame)
-          n.x = lerp(n.x, -0.04 + (cx + (cy % 2) * 0.5) * 0.135, 0.06);
-          n.y = lerp(n.y, 0.1 + cy * 0.27, 0.06);
+          n.x = lerp(n.x, -0.04 + (cx + (cy % 2) * 0.5) * 0.2, 0.06);
+          n.y = lerp(n.y, 0.16 + cy * 0.34, 0.06);
         } else {
           n.x += n.vx * dt;
           n.y += n.vy * dt;
@@ -356,7 +360,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
           }
         }
       });
-      const D = pattern ? Math.max(70, 0.135 * w * 1.15) : 105;
+      const D = pattern ? Math.max(70, 0.2 * w * 1.15) : 130;
       ctx.lineWidth = 1;
       for (let i = 0; i < N; i++)
         for (let j = i + 1; j < N; j++) {
@@ -384,7 +388,7 @@ const SCENES: Record<Key, (b: Brand, o: Canvas, m: Mouse) => Scene> = {
       nodes.forEach((n, i) => {
         ctx.fillStyle = i % 5 === 0 ? b.ink : rgba(b.ink, 0.9);
         ctx.beginPath();
-        ctx.arc(n.x * w, n.y * h, 2.2 + (i % 5 === 0 ? 1.6 : 0), 0, TAU);
+        ctx.arc(n.x * w, n.y * h, 1.8 + (i % 5 === 0 ? 1.1 : 0), 0, TAU);
         ctx.fill();
       });
     };

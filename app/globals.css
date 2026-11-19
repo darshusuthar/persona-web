@@ -1414,7 +1414,7 @@ img{max-width:100%}
 .work-cards .wcard.wc2{aspect-ratio:auto;padding:10px;justify-content:flex-start;gap:0;
   background:
     linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.03) 60%,rgba(255,255,255,.05)),
-    radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--wc-base) 42%,transparent),transparent 72%),
+    radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--wc-base) 18%,transparent),transparent 72%),
     rgba(22,22,24,.55);
   border:1px solid rgba(255,255,255,.14);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(255,255,255,.04),0 20px 50px -24px rgba(0,0,0,.6);

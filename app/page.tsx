@@ -52,10 +52,10 @@ export default async function Home() {
       {false && <HeroCentered stats={stats ?? []} />}
       {false && <HeroSplit stats={stats ?? []} />}
 
-      {/* CRAFT STORIES */}
+      {/* SHIPPED WORK (case studies) */}
       <section className="ap dark ap-left" id="designer" data-nav="dark">
         <div className="wrap">
-          <h2>Craft stories</h2>
+          <h2>Shipped work</h2>
           <p className="k">A decade shaping products across fintech, commerce and SaaS.</p>
           <CraftCards />
           <Testimonials items={testi ?? []} />
