@@ -41,6 +41,10 @@ export default function Nav({ back = false }: { back?: boolean }) {
   const current = ['/thoughts', '/podcast', '/about'].find(
     (h) => path === h || path.startsWith(h + '/')
   );
+  // The back button goes up one level: a thought returns to the Thoughts list,
+  // anything else returns home.
+  const backHref = path.startsWith('/thoughts/') ? '/thoughts' : '/';
+  const backLabel = backHref === '/thoughts' ? 'Back to Thoughts' : 'Back to home';
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -65,7 +69,7 @@ export default function Nav({ back = false }: { back?: boolean }) {
   return (
     <div className={`ap-nav${hidden ? ' nav-hidden' : ''}`} id="apNav">
       {back && (
-        <Link href="/" className="ap-backbtn" aria-label="Back to home">
+        <Link href={backHref} className="ap-backbtn" aria-label={backLabel}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l-6-6 6-6" />
           </svg>
