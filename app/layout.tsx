@@ -12,9 +12,23 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.darshansuthar.me'),
   title: 'Darshan Suthar — Designer. Founder. Host.',
   description:
     "The story of Darshan Suthar — experience designer, founder of teem.fit and PRODUX, and host of Darshan's Diary.",
+  // what a shared link shows (the image comes from app/opengraph-image.tsx)
+  openGraph: {
+    type: 'website',
+    siteName: 'Darshan Suthar',
+    title: 'Darshan Suthar',
+    description: 'A design leader who ships: craft, teams and strategy',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Darshan Suthar',
+    description: 'A design leader who ships: craft, teams and strategy',
+  },
   icons: {
     icon: [
       { url: '/images/favicon/favicon.ico', sizes: 'any' },
