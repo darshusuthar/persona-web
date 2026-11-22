@@ -1619,3 +1619,10 @@ html:has(.hl:not(.hl-out)) .hw-stage,html:has(.hl:not(.hl-out)) .hwm-grid{opacit
    so the hero keeps the same top spacing on its own */
 .cs-hero{padding-top:160px}
 @media(max-width:860px){.cs-hero{padding-top:96px}}
+
+/* navbar: "Darshan's Diary" shows its play icon before the label on desktop too */
+@media(min-width:861px){
+  .ap-nav .ap-right a.lead{display:inline-flex;align-items:center;gap:6px}
+  .ap-nav .ap-right a.lead .ap-ic{display:inline-flex}
+  .ap-nav .ap-right a.lead .ap-ic svg{width:16px;height:16px;display:block}
+}

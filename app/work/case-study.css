@@ -154,3 +154,19 @@ html:has(.csb){scroll-behavior:smooth;scroll-padding-top:90px}
 .csb>.csb-sec:last-child{margin-bottom:40px}
 /* the site-wide `section{padding:76px 0}` (56px on phones) must not apply to case-study sections */
 .csb>.csb-sec{padding:0}
+
+/* Section menu entrance: replays every time it appears. Noticeable but soft:
+   the pill slides down smoothly (no bounce); items blur-fade in one after another;
+   a soft neutral (grey) halo spreads out from the pill once. */
+.csb-pillnav.show{animation:pn-in .5s cubic-bezier(.22,1,.36,1) both}
+.csb-pillnav.show a{animation:pn-item .5s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i, 0) * 70ms + 260ms)}
+.csb-pillnav::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
+.csb-pillnav.show::after{animation:pn-halo 1.3s .3s ease-out both}
+@keyframes pn-in{
+  0%{transform:translate(-50%,-160%);opacity:0}
+  100%{transform:translate(-50%,0);opacity:1}}
+@keyframes pn-item{from{opacity:0;transform:translateY(-12px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes pn-halo{
+  0%{opacity:1;box-shadow:0 0 0 0 rgba(29,29,31,.32)}
+  100%{opacity:1;box-shadow:0 0 0 18px rgba(29,29,31,0)}}
+@media (prefers-reduced-motion:reduce){.csb-pillnav.show,.csb-pillnav.show a,.csb-pillnav.show::after{animation:none}}

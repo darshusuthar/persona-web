@@ -1,6 +1,7 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createClient } from '@/lib/supabase/server';
+import '@/app/feedback.css';
 
 export const revalidate = 60;
 
@@ -24,7 +25,9 @@ export default async function PodcastPage() {
         <div className="wrap">
           <header className="th-hero pod-hero-c">
             <h1 className="pod-hero-title">
-              Hosting conversations with leaders who&apos;ve made an impact.
+              Conversations with leaders{' '}
+              <br />
+              who&apos;ve made an impact.
             </h1>
             <p className="th-hero-sub">
               Candid talks with product, design, research and growth leaders — the real lessons

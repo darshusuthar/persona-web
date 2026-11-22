@@ -5,12 +5,12 @@ import { join } from 'node:path';
 // The card that shows up when the site link is shared (LinkedIn, X, WhatsApp, Slack…):
 // Darshan's photo, name and title over the hero's soft colour pools.
 
-export const alt = 'Darshan Suthar — A design leader who ships: craft, teams and strategy';
+export const alt = 'Darshan Suthar — design leader, founder and host';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 const NAME = 'Darshan Suthar';
-const TITLE = 'A design leader who ships: craft, teams and strategy';
+const TITLE = 'Design leader, founder and host, with a decade in fintech and consumer tech.';
 const SITE = 'darshansuthar.me';
 
 export default async function Image() {
@@ -75,8 +75,8 @@ export default async function Image() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, paddingRight: 70 }}>
           <img
             src={`data:image/jpeg;base64,${photo}`}
-            width={400}
-            height={478}
+            width={420}
+            height={420}
             style={{ borderRadius: 32, objectFit: 'cover', boxShadow: '0 30px 60px rgba(30,20,60,.18)' }}
           />
         </div>

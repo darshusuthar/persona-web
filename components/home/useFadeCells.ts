@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type RefObject } from 'react';
 
 // Each cell holds two stacked layers. At its own random moment, a cell loads a
 // new photo into the hidden layer and cross-fades to it, so the grid never
@@ -13,7 +13,8 @@ const MAX_WAIT = 7800;
 const FIRST_MIN = 6000;
 const FIRST_MAX = 14000;
 
-export function useFadeCells(pool: string[], count: number): FadeCell[] {
+// `paused` (optional): indexes of cells that must hold their photo for now (e.g. while hovered).
+export function useFadeCells(pool: string[], count: number, paused?: RefObject<Set<number>>): FadeCell[] {
   const [cells, setCells] = useState<FadeCell[]>(() =>
     Array.from({ length: count }, (_, i) => ({ a: pool[i % pool.length], b: pool[i % pool.length], showB: false }))
   );
@@ -34,14 +35,21 @@ export function useFadeCells(pool: string[], count: number): FadeCell[] {
 
     const swap = (i: number) => {
       if (!alive) return;
+      if (paused?.current?.has(i)) return schedule(i); // held: try again later
       const used = new Set(showing);
       const avail = pool.filter((u) => !used.has(u));
       if (!avail.length) return schedule(i);
       const next = avail[Math.floor(Math.random() * avail.length)];
+      const prev = showing[i];
       showing[i] = next; // reserve it so no other cell picks it meanwhile
       const im = new Image();
       const go = () => {
         if (!alive) return;
+        if (paused?.current?.has(i)) {
+          // hovered while the next photo was loading: keep the current one
+          showing[i] = prev;
+          return schedule(i);
+        }
         setCells((prev) =>
           prev.map((c, j) => (j !== i ? c : c.showB ? { a: next, b: c.b, showB: false } : { a: c.a, b: next, showB: true }))
         );

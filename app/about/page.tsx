@@ -2,11 +2,13 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createClient } from '@/lib/supabase/server';
 import { img } from '@/lib/media';
+import '@/app/feedback.css';
+
 
 export const revalidate = 60;
 
 export const metadata = {
-  title: 'About — Darshan Suthar',
+  title: 'About me — Darshan Suthar',
   description: 'A builder who thinks in systems — the story of Darshan Suthar.',
 };
 
@@ -31,6 +33,7 @@ export default async function AboutPage() {
           </div>
           <div className="ab-hero-inner">
             <div className="ab-hero-text">
+              <h1 className="ab-title">A designer, founder &amp; host</h1>
               <p className="ab-sub">
                 A designer by training, a builder by instinct. I think in systems more than screens,
                 and care more about why something exists than how it looks.
@@ -44,7 +47,7 @@ export default async function AboutPage() {
 
         <div className="wrap">
           <section className="ab-versions">
-            <p className="ab-eyebrow">A few versions of me</p>
+            <p className="ab-eyebrow">My journey</p>
             <div className="ab-chapters">
               {(chapters ?? []).map((c) => (
                 <article className="ab-chapter" key={c.id}>

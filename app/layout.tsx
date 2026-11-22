@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Darshan Suthar',
     title: 'Darshan Suthar',
-    description: 'A design leader who ships: craft, teams and strategy',
+    description: 'Design leader, founder and host, with a decade in fintech and consumer tech.',
     url: '/',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Darshan Suthar',
-    description: 'A design leader who ships: craft, teams and strategy',
+    description: 'Design leader, founder and host, with a decade in fintech and consumer tech.',
   },
   icons: {
     icon: [

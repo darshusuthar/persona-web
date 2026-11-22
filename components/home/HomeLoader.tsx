@@ -40,7 +40,7 @@ type Box = { cx: number; cy: number; size: number; spacing: number };
 
 // Where the real hero heading is, so the loader text lines up with it exactly.
 function measureHeading(): Box | null {
-  const h = [...document.querySelectorAll<HTMLElement>('.hw-head .hero-name, .hwm-head .hero-name')].find(
+  const h = [...document.querySelectorAll<HTMLElement>('.hi-name, .hw-head .hero-name, .hwm-head .hero-name')].find(
     (el) => el.offsetParent !== null
   );
   if (!h) return null;

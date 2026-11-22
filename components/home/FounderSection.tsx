@@ -126,10 +126,9 @@ export default function FounderSection() {
     <section className="fd" id="founder" data-nav="light">
       <div className="wrap">
         <div className="fd-head">
-          <h2 className="fd-h2">Built what I believed in.</h2>
+          <h2 className="fd-h2">Built teem.fit from scratch.</h2>
           <p className="fd-sub">
-            A venture that started from a problem I kept running into, both as a designer and as the host talking to
-            people who hire them.
+            A hiring platform for designers. I took it from idea to launch myself, with an extended tech team.
           </p>
         </div>
 
@@ -218,6 +217,7 @@ export default function FounderSection() {
           </div>
 
         </article>
+        {/* "How I built it" steps hidden for now: <TeemStory /> */}
       </div>
     </section>
   );

@@ -107,6 +107,7 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
               key={n.id}
               href={`#${n.id}`}
               className={`${i === active ? 'on' : ''}${n.hideMobile ? ' hide-sm' : ''}`.trim() || undefined}
+              style={{ ['--i' as string]: i } as React.CSSProperties}
             >
               {n.label}
             </a>

@@ -16,9 +16,8 @@ const IThoughts = () => (
 );
 const IPodcast = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-    <rect x="9" y="3" width="6" height="11" rx="3" />
-    <path d="M6 11a6 6 0 0 0 12 0" />
-    <path d="M12 17v4" />
+    {/* play button, line style */}
+    <path d="M7.5 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9 4.74a1 1 0 0 0-1.5.86Z" />
   </svg>
 );
 const IAbout = () => (
@@ -28,11 +27,20 @@ const IAbout = () => (
   </svg>
 );
 
+const IWork = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="7" width="18" height="13" rx="2" />
+    <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+  </svg>
+);
+
+// Feedback: "Case studies" up front for recruiters, "Library" renamed, Thoughts last.
 const items = [
   { href: '/', label: 'Home', Icon: IHome },
-  { href: '/thoughts', label: 'Thoughts', Icon: IThoughts },
-  { href: '/podcast', label: 'Library', Icon: IPodcast },
+  { href: '/#work', label: 'Case studies', Icon: IWork },
+  { href: '/podcast', label: "Darshan's Diary", Icon: IPodcast, lead: true },
   { href: '/about', label: 'About', Icon: IAbout },
+  // Thoughts is hidden for now: { href: '/thoughts', label: 'Thoughts', Icon: IThoughts },
 ];
 
 export default function Nav({ back = false }: { back?: boolean }) {
@@ -47,10 +55,10 @@ export default function Nav({ back = false }: { back?: boolean }) {
   const backHref = path.startsWith('/thoughts/')
     ? '/thoughts'
     : path.startsWith('/work/')
-      ? '/#designer'
+      ? '/#work'
       : '/';
   const backLabel =
-    backHref === '/thoughts' ? 'Back to Thoughts' : backHref === '/#designer' ? 'Back to Shipped work' : 'Back to home';
+    backHref === '/thoughts' ? 'Back to Thoughts' : backHref === '/#work' ? 'Back to Case studies' : 'Back to home';
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -83,10 +91,10 @@ export default function Nav({ back = false }: { back?: boolean }) {
       )}
       <div className="wrap">
         <div className="ap-right">
-          {items.map(({ href, label, Icon }) => {
-            const active = back ? false : href === '/' ? !current : href === current;
+          {items.map(({ href, label, Icon, lead }) => {
+            const active = back ? false : href === '/' ? !current : href === current || (href === '/#work' && path.startsWith('/work/'));
             return (
-              <Link key={href} href={href} className={active ? 'active' : ''}>
+              <Link key={href} href={href} className={[active ? 'active' : '', lead ? 'lead' : ''].join(' ').trim()}>
                 <span className="ap-ic">
                   <Icon />
                 </span>

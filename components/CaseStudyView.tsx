@@ -5,10 +5,22 @@ import MdImage from '@/components/MdImage';
 import CaseStudyBlocks, { Banner, sectionNav } from '@/components/CaseStudyBlocks';
 import CaseStudyEnhancer from '@/components/CaseStudyEnhancer';
 import type { Block, GalleryBlock } from '@/lib/blocks';
+import { OVERVIEW, COPY_FIXES } from '@/lib/caseOverview';
 import '@/app/work/case-study.css';
+import '@/app/feedback.css';
+
+// Feedback version: simplify dense lines in the CMS text without touching the database.
+function fix<T>(v: T): T {
+  if (typeof v === 'string') return COPY_FIXES.reduce((t, [a, b]) => t.split(a).join(b), v as string) as T;
+  if (Array.isArray(v)) return v.map(fix) as T;
+  if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, fix(x)])) as T;
+  return v;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function CaseStudyView({ c }: { c: Record<string, any> }) {
+export default function CaseStudyView({ c: raw }: { c: Record<string, any> }) {
+  const c = fix(raw);
+  const o = OVERVIEW[c.slug as string];
   const allBlocks: Block[] = Array.isArray(c.blocks) ? c.blocks : [];
   // A "banner" gallery is shown in the header, in place of the cover image.
   const banner = allBlocks.find(
@@ -31,6 +43,17 @@ export default function CaseStudyView({ c }: { c: Record<string, any> }) {
             {c.role ? <div className="m"><b>Role</b><span>{c.role}</span></div> : null}
             {c.tools ? <div className="m"><b>{c.tools_label || 'Tools'}</b><span>{c.tools}</span></div> : null}
           </div>
+          {o ? (
+            // Fixed overview, same fields in the same order on every case study.
+            <div className="cs-brief">
+              <div><b>My role</b><span>{o.role}</span></div>
+              <div><b>Worked with</b><span>{o.team}</span></div>
+              <div><b>Where the problem came from</b><span>{o.source}</span></div>
+              <div><b>The biggest challenge</b><span>{o.challenge}</span></div>
+              <div><b>What I did differently</b><span>{o.different}</span></div>
+              <div><b>Impact</b><span>{o.impact}</span></div>
+            </div>
+          ) : null}
         </div>
         {banner ? (
           <Banner block={banner} />
