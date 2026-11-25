@@ -1,10 +1,34 @@
 import { BRANDS, BrandLogo } from '@/lib/brands';
 import HeroPhotos from './HeroPhotos';
 
-// Feedback hero, centred: name, one paragraph (designer, founder, host), the products
-// I've designed, then a single row of four photos at the bottom that flip at random.
+// Feedback hero, centred: name, the products I've designed,
+// a row of four photos that flip at random, then four columns that spell out the story
+// (designer, design leader, founder, host), each with its proof number.
 
 const LOGOS = ['aspora', 'meesho', 'impactcraft', 'sensibull', 'teemfit'];
+
+const FACTS = [
+  {
+    k: 'Product designer',
+    n: '11+ years',
+    d: 'Crafting complex B2B tools and consumer fintech, for teams like Sensibull, ImpactCraft, Meesho and Aspora.',
+  },
+  {
+    k: 'Design leader · Produx',
+    n: '8 designers led',
+    d: "Hired, mentored and reviewed my studio's designers, who shipped 17 products across 6 sectors.",
+  },
+  {
+    k: 'Founder · teem.fit',
+    n: '1,000+ designers',
+    d: 'Took a hiring platform for designers from idea to launch, with 20+ hiring teams on board.',
+  },
+  {
+    k: "Host · Darshan's Diary",
+    n: '35+ leaders',
+    d: 'Conversations with design and product leaders from teams like Razorpay, Pocket FM and smallcase, since 2024.',
+  },
+];
 
 export default function HeroIntro() {
   return (
@@ -19,11 +43,6 @@ export default function HeroIntro() {
       <div className="wrap">
         <div className="hi-text">
           <h1 className="hi-name">Darshan Suthar</h1>
-          <p className="hi-p">
-            A design leader, founder and host with a decade in fintech and consumer tech. At Produx, my{' '}
-            <strong>8 designers managed 17 products</strong> in its lifetime. I built <strong>teem.fit</strong> to{' '}
-            <strong>1,000+ designers</strong> and hosted <strong>35+ design and product leaders</strong> on my podcast.
-          </p>
           <div className="hi-logos">
             <div className="hi-logos-row">
               {LOGOS.map((k) => (
@@ -33,6 +52,15 @@ export default function HeroIntro() {
           </div>
         </div>
         <HeroPhotos />
+        <ul className="hi-facts">
+          {FACTS.map((f) => (
+            <li key={f.k}>
+              <span className="hi-fk">{f.k}</span>
+              <b className="hi-fn">{f.n}</b>
+              <p className="hi-fd">{f.d}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

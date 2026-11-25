@@ -110,8 +110,10 @@ export default function StoryModal() {
                       </svg>
                     </span>
                   </button>
-                  <div className="sm-acc-body">
-                    <div className="sm-acc-inner">{s.body}</div>
+                  <div className="sm-acc-body" inert={active !== i}>
+                    <div className="sm-acc-clip">
+                      <div className="sm-acc-inner">{s.body}</div>
+                    </div>
                   </div>
                 </div>
               ))}

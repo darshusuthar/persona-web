@@ -1,20 +1,16 @@
 import ProduxBanner from './ProduxBanner';
 
-// Feedback: Produx was undersold. How we worked, the team, how it grew,
-// shown as three columns split by hairlines.
+// Feedback: Produx was undersold. How we worked, and the team and what it took on,
+// shown as two balanced columns split by a hairline.
 
 const POINTS = [
   {
-    t: 'Worked as an embedded design team',
-    d: 'Weekly reviews with founders and shared sprints with their engineers, so design never sat in a separate queue.',
+    t: 'An embedded team, not an agency',
+    d: 'Weekly reviews with founders and shared sprints with their engineers, so design never waited in a separate queue and stayed a step ahead of the build.',
   },
   {
-    t: 'Hired and grew 8 designers',
-    d: 'I hired and grew the team, and ran their reviews and growth plans.',
-  },
-  {
-    t: 'Grew to 17 clients',
-    d: 'Across 6 sectors in about 5 years.',
+    t: '8 designers, 17 clients, 6 sectors',
+    d: 'I hired the team and grew each designer through reviews and growth plans. Together we took on 17 clients in about five years, and many kept coming back.',
   },
 ];
 

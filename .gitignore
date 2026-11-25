@@ -15,3 +15,6 @@ next-env.d.ts
 # OS / logs
 .DS_Store
 npm-debug.log*
+
+# Personal exports (resume has phone number) — never commit
+exports/

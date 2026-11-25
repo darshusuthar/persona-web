@@ -283,12 +283,18 @@ footer.foot-connect-sec{border-top:none}
 .sm-acc{margin-top:22px;display:flex;flex-direction:column;gap:12px}
 .sm-acc-item{background:#FAFAFA;border:1px solid #F0F0F1;border-radius:16px;overflow:hidden}
 .sm-acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:0;cursor:pointer;font:inherit;text-align:left;padding:18px 20px;font-size:17px;font-weight:600;color:var(--ink)}
-.sm-acc-ic{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform .3s ease,color .2s ease}
+.sm-acc-ic{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:transform .5s cubic-bezier(.32,.72,0,1),color .2s ease}
 .sm-acc-ic svg{width:16px;height:16px}
 .sm-acc-head:hover .sm-acc-ic{color:var(--ink)}
 .sm-acc-item.open .sm-acc-ic{transform:rotate(180deg)}
-.sm-acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.sm-acc-item.open .sm-acc-body{max-height:2600px}
+/* Open/close animate the real height (grid row 0fr ↔ 1fr), so when one item closes and
+   another opens, both move together over the same time and curve: no jump. */
+.sm-acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1)}
+.sm-acc-item.open .sm-acc-body{grid-template-rows:1fr}
+.sm-acc-clip{min-height:0;overflow:hidden}
+.sm-acc-inner{opacity:0;transform:translateY(-6px);transition:opacity .25s ease,transform .5s cubic-bezier(.32,.72,0,1)}
+.sm-acc-item.open .sm-acc-inner{opacity:1;transform:none;transition:opacity .35s ease .12s,transform .5s cubic-bezier(.32,.72,0,1)}
+@media (prefers-reduced-motion:reduce){.sm-acc-body,.sm-acc-inner{transition:none}}
 .sm-acc-inner{padding:0 20px 20px}
 .sm-acc-inner p{font-size:15.5px;line-height:1.6;color:#3a3a3d;margin:0 0 10px}
 .sm-acc-inner ul{margin:0 0 10px;padding-left:20px}

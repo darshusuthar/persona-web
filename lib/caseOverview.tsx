@@ -14,6 +14,7 @@ export type Overview = {
   cover?: string; // card image, when it differs from the case study banner
   card: string; // impact-story title for the home card
   cardImpact: React.ReactNode;
+  cardRole: string; // my role, shown on the home card
   role: React.ReactNode;
   team: React.ReactNode;
   challenge: React.ReactNode;
@@ -34,12 +35,13 @@ export const OVERVIEW: Record<string, Overview> = {
     cover: '/images/case-studies/aspora-card.webp',
     shot: { fit: 'contain', bg: '#ffffff', pad: '0' },
     card: 'How one setting turned a one-time gold buy into a habit',
-    cardImpact: 'Target: SIP conversion from ~3% to 7%, and ~3,500 SIPs in 3 months',
+    cardImpact: 'Target: SIP conversion from ~3% to 7%, and 6% of monthly transacting users on a SIP within 3 months',
+    cardRole: 'Lead Designer',
     role: 'Product Design Consultant, end-to-end design lead',
     team: 'The wealth pod PM, front-end engineers and the support manager',
     challenge: 'More than half of our gold buyers in the UAE bought exactly once, and almost no one came back.',
     impact:
-      'Targets from the PRD: SIP funnel conversion from ~3% to 7%, M+3 retention from 17% to 60%, and ~3,500 SIPs signed up in the first 3 months.',
+      'Targets from the PRD: SIP funnel conversion from ~3% to 7%, M+3 retention from 17% to 60%, and 6% of monthly transacting users on a SIP within the first 3 months.',
     different:
       'Instead of copying competitor SIP flows, I designed SIP as an option on the buy page users already knew, modelled on the money transfer they make every month.',
     source: (
@@ -51,17 +53,18 @@ export const OVERVIEW: Record<string, Overview> = {
   },
   impactcraft: {
     brand: 'impactcraft',
-    sector: 'SaaS · Customer success',
+    sector: 'B2B SaaS',
     company: 'ImpactCraft',
     when: 'Apr 2025',
     card: 'How a daily priority feed replaced a dashboard nobody acted on',
-    cardImpact: 'The busiest screen in the product became one every role could act on immediately',
+    cardImpact: '74% of signals now acted on within 24 hours, up from 18% on the old dashboard',
+    cardRole: 'Lead Designer',
     role: 'Product Designer',
     team: 'The founder, directly',
     challenge:
       'One dashboard served every role, so customer success managers couldn’t tell which accounts needed them first.',
     impact:
-      'The busiest screen went from something every role had to interpret to one each role could act on immediately, measured on time-to-go-live, adoption, change-request resolution time and CSAT.',
+      '74% of signals from across the product are now acted on within 24 hours, up from 18% on the old dashboard.',
     different: 'Instead of a better dashboard, I designed a role-relevant priority feed: what to act on today, and why.',
     source:
       'Research and client conversations. It came from the logistics team we supported, who use the product every day: their different levels of users each needed something different from the same screen.',
@@ -69,12 +72,13 @@ export const OVERVIEW: Record<string, Overview> = {
   },
   checkout: {
     brand: 'meesho',
-    sector: 'Commerce · Social commerce',
+    sector: 'E-commerce',
     company: 'Meesho',
-    when: 'Aug 2021',
+    when: 'Mar 2022',
     shot: { fit: 'contain', bg: '#fddfef', pad: '0' },
     card: 'One cart for many suppliers: how ordering got simpler',
     cardImpact: '11% growth in orders placed per day, 3 months after launch',
+    cardRole: 'Product Designer',
     role: 'Product Designer',
     team: 'A cross-functional team and my reporting manager',
     challenge: 'Users could only order from one supplier at a time, so a basket of products meant several separate orders.',
@@ -91,6 +95,7 @@ export const OVERVIEW: Record<string, Overview> = {
     when: 'Mar 2020',
     card: 'Redesigning the one screen every options trader lives in',
     cardImpact: '350% growth in paid users, 6 months after launch',
+    cardRole: 'Founding Designer',
     role: 'Founding designer',
     team: 'The founder, the PM and the engineering team',
     challenge: 'The strategy builder is the most important feature of options trading, and it was the hardest to use.',
