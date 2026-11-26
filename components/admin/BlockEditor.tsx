@@ -296,9 +296,10 @@ export default function BlockEditor({ value, onChange, types = BASIC_BLOCKS }: P
                 {rich && (
                   <label className="be-inline">
                     Style
-                    <select value={b.style || ''} onChange={(e) => update(b.id, { style: e.target.value as '' | 'board' })}>
+                    <select value={b.style || ''} onChange={(e) => update(b.id, { style: e.target.value as '' | 'board' | 'xboard' })}>
                       <option value="">In the text column</option>
                       <option value="board">Wide board (dark frame)</option>
+                      <option value="xboard">Extra-wide board (tray width)</option>
                     </select>
                   </label>
                 )}

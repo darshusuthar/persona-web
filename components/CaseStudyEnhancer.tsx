@@ -19,7 +19,6 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
   const [progress, setProgress] = useState(0);
   const [fill, setFill] = useState(0); // how far along the rail line, 0–100
   const [style, setStyle] = useState<NavStyle>('rail');
-  const [covered, setCovered] = useState(false); // wide content is passing under the rail
   const railRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('nav') === 'pill') setStyle('pill');
@@ -62,26 +61,6 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
     const secs = nav.map((n) => document.getElementById(n.id));
     const body = document.querySelector<HTMLElement>('.cs-body');
     let raf = 0;
-    // The blocks that extend into the rail's column. Only their left/right edges matter, and
-    // those change with the window width, not with scrolling, so measure them on resize only.
-    let wide: Element[] = [];
-    const measureWide = () => {
-      const rail = railRef.current;
-      const rr = rail?.getBoundingClientRect();
-      wide = [];
-      if (!rail || !rr || !rr.width) return;
-      const lab = Array.from(rail.querySelectorAll('.lab')).reduce((m, l) => Math.max(m, l.getBoundingClientRect().right), rr.right);
-      const right = Math.max(rr.right, lab) + 16;
-      document.querySelectorAll('.csb *').forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.width && r.height && r.left < right && !wide.some((w) => w.contains(el))) wide.push(el);
-      });
-    };
-    measureWide();
-    const onResize = () => {
-      measureWide();
-      onScroll();
-    };
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
@@ -90,16 +69,6 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
         setProgress(h > 0 ? (y / h) * 100 : 0);
         const start = body ? body.getBoundingClientRect().top + y - 140 : 600;
         setShowNav(nav.length > 0 && y > start);
-        // Wide blocks (galleries, boards) reach into the left margin. While one passes behind
-        // the rail, the content wins: the rail fades out, and comes back once it has gone by.
-        const rr = railRef.current?.getBoundingClientRect();
-        setCovered(
-          !!rr && rr.width > 0 &&
-            wide.some((el) => {
-              const r = el.getBoundingClientRect();
-              return r.bottom > rr.top - 24 && r.top < rr.bottom + 24;
-            })
-        );
         const tops = secs.map((s) => (s ? s.getBoundingClientRect().top + y : Infinity));
         const line = y + 120;
         let idx = -1;
@@ -117,21 +86,19 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
       });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
-    window.addEventListener('load', onResize);
+    window.addEventListener('resize', onScroll);
     onScroll();
     return () => {
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onResize);
-      window.removeEventListener('load', onResize);
+      window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
     };
   }, [nav]);
 
-  // Pill style: on desktop the section nav takes the site nav's place while reading.
-  // Rail style: the site nav stays, so section headings stop below it.
+  // While reading, the pill bar takes the site nav's place on desktop. Where the rail shows
+  // (wide screens, rail style) the site nav stays instead, and the CSS undoes the swap.
   useEffect(() => {
-    document.body.classList.toggle('csb-secnav', style === 'pill' && showNav);
+    document.body.classList.toggle('csb-secnav', showNav);
     document.body.classList.toggle('csb-rail-on', style === 'rail');
     return () => document.body.classList.remove('csb-secnav', 'csb-rail-on');
   }, [showNav, style]);
@@ -201,7 +168,7 @@ export default function CaseStudyEnhancer({ nav }: { nav: NavItem[] }) {
       {nav.length > 0 && style === 'rail' ? (
         <nav
           ref={railRef}
-          className={`csb-rail${showNav ? ' show' : ''}${covered ? ' covered' : ''}`}
+          className={`csb-rail${showNav ? ' show' : ''}`}
           aria-label="Case study sections"
         >
           <ol>

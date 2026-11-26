@@ -174,7 +174,7 @@ function toEmbedSrc(raw: string): string | null {
 function isBreakout(b: Block) {
   return (
     (b.type === 'gallery' && b.layout !== 'plain') ||
-    (b.type === 'image' && b.style === 'board') ||
+    (b.type === 'image' && (b.style === 'board' || b.style === 'xboard')) ||
     b.type === 'quote'
   );
 }
@@ -252,7 +252,7 @@ function renderBreakout(b: Block, key: string | number, style?: CSSProperties): 
   }
   if (b.type === 'image') {
     return (
-      <figure className="csb-wide csb-reveal" key={key} style={style}>
+      <figure className={`${b.style === 'xboard' ? 'csb-xwide' : 'csb-wide'} csb-reveal`} key={key} style={style}>
         <div className="csb-board">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={b.url} alt={plain(b.caption)} loading="lazy" />

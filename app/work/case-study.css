@@ -62,8 +62,8 @@ html:has(.csb){scroll-behavior:smooth;scroll-padding-top:90px}
 .cs-body .csb .csb-call strong,.cs-body .csb .csb-call b{color:#e7c27a}
 
 /* ---------- media ---------- */
-.csb-wide{width:min(860px,calc(100vw - 48px));margin:34px 0 34px calc(50% - min(430px,50vw - 24px))}
-.csb-xwide{width:min(1112px,calc(100vw - 48px));margin:40px 0 40px calc(50% - min(556px,50vw - 24px))}
+.csb .csb-wide,.csb-wide{width:min(860px,calc(100vw - 48px));margin:34px 0 34px calc(50% - min(430px,50vw - 24px))}
+.csb .csb-xwide,.csb-xwide{width:min(1112px,calc(100vw - 48px));margin:40px 0 40px calc(50% - min(556px,50vw - 24px))}
 .csb-breakout{width:min(1112px,calc(100vw - 48px));margin-left:calc(50% - min(556px,50vw - 24px));margin-top:18px}
 .csb-board{border-radius:16px;overflow:hidden;background:#141414;cursor:zoom-in}
 .csb-board img{width:100%;display:block}
@@ -186,18 +186,21 @@ html:has(.csb){scroll-behavior:smooth;scroll-padding-top:90px}
      current   → a small open book whose page turns left to right ("reading now"), label in ink
      read      → a small solid dot, label in ink (no tick: it says "been here", not "task complete")
    The line under each step darkens as you read through that section.
-   Phones keep the pill bar (.csb-pillnav.sm-only). */
+   It lives in the margin outside the widest content (the 1112px trays and boards), so it
+   never sits on top of anything and never has to hide:
+     ≥1440px     full labels, tucked against the left edge of the widest content
+     1240–1439px circles only (labels on hover)
+     <1240px     no margin left: the section pill bar is used instead, as on phones */
 .csb-rail{display:none}
-@media(min-width:861px){
+body.csb-rail-on .csb [id]{scroll-margin-top:96px}
+@media(min-width:1240px){
   .csb-pillnav.sm-only{display:none}
-  body.csb-rail-on .csb [id]{scroll-margin-top:96px}
+  body.csb-rail-on.csb-secnav .ap-nav{transform:none}
   .csb-rail{display:block;position:fixed;z-index:40;top:50%;
-    left:max(28px,calc((100vw - 760px)/2 - 236px));
+    left:max(16px,calc((100vw - 1112px) / 2 - 152px));
     transform:translate(-10px,-50%);opacity:0;pointer-events:none;
     transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1)}
   .csb-rail.show{opacity:1;transform:translate(0,-50%);pointer-events:auto}
-  /* a wide block is passing behind: let the content win */
-  .csb-rail.show.covered{opacity:0;transform:translate(-6px,-50%);pointer-events:none;transition:opacity .25s ease,transform .35s ease}
   .csb-rail ol{list-style:none;margin:0;padding:0}
   .csb-rail li{position:relative;padding-bottom:28px}
   .csb-rail li:last-child{padding-bottom:0}
@@ -205,7 +208,7 @@ html:has(.csb){scroll-behavior:smooth;scroll-padding-top:90px}
   .csb-rail li:not(:last-child)::before,
   .csb-rail li:not(:last-child)::after{content:"";position:absolute;left:15px;top:37px;width:1.5px;height:calc(100% - 43px);border-radius:2px;background:#ececef}
   .csb-rail li:not(:last-child)::after{background:#c4c4cb;transform-origin:top;transform:scaleY(var(--seg,0));transition:transform .2s linear}
-  .csb-rail a{display:flex;align-items:center;gap:14px;text-decoration:none;color:#a3a3aa;font-size:14px;font-weight:450;letter-spacing:-.005em;transition:color .3s ease}
+  .csb-rail a{display:flex;align-items:center;gap:12px;text-decoration:none;color:#a3a3aa;font-size:13.5px;font-weight:450;letter-spacing:-.005em;transition:color .3s ease}
   .csb-rail a:hover{color:#1d1d1f}
   .csb-rail .mark{position:relative;flex:none;width:31px;height:31px;border-radius:50%;background:#f4f4f2;display:grid;place-items:center;transition:background .3s ease}
   .csb-rail .pip{width:6px;height:6px;border-radius:50%;background:#3a3a40;transition:transform .35s cubic-bezier(.22,1,.36,1)}
@@ -223,9 +226,9 @@ html:has(.csb){scroll-behavior:smooth;scroll-padding-top:90px}
   .csb-rail a:hover .mark{background:#ececea}
   .csb-rail.show li{animation:rail-item .5s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0) * 55ms + 120ms)}
 }
-/* narrow laptops: not enough margin for labels, so circles only; the label shows on hover */
-@media(min-width:861px) and (max-width:1139px){
-  .csb-rail{left:20px}
+/* mid-size laptops: room for the circles but not the labels; the label shows on hover */
+@media(min-width:1240px) and (max-width:1439px){
+  .csb-rail{left:16px}
   .csb-rail .lab{position:absolute;left:42px;top:15px;transform:translate(-4px,-50%);opacity:0;pointer-events:none;white-space:nowrap;padding:5px 11px;border-radius:999px;background:#fff;box-shadow:0 4px 14px rgba(20,20,40,.1);transition:opacity .2s ease,transform .2s ease}
   .csb-rail a:hover .lab,.csb-rail a:focus-visible .lab{opacity:1;transform:translate(0,-50%)}
 }

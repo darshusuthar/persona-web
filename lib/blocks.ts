@@ -25,7 +25,7 @@ export type ImageBlock = {
   type: 'image';
   url: string;
   caption: string;
-  style?: '' | 'board'; // board = wide dark frame (benchmark boards)
+  style?: '' | 'board' | 'xboard'; // board = wide frame (860px), xboard = extra wide (1112px, same as phone trays)
 };
 export type VideoBlock = { id: string; type: 'video'; url: string };
 export type EmbedBlock = { id: string; type: 'embed'; url: string; html: string };
