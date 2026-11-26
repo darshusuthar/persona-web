@@ -11,7 +11,7 @@ const FACTS = [
   {
     k: 'Product designer',
     n: '11+ years',
-    d: 'Crafting complex B2B tools and consumer fintech, for teams like Sensibull, ImpactCraft, Meesho and Aspora.',
+    d: 'Crafting AI-powered B2B tools and consumer fintech for Sensibull, ImpactCraft, Meesho and Aspora.',
   },
   {
     k: 'Design leader · Produx',

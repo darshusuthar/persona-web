@@ -10,7 +10,8 @@ type T = {
   quote?: string | null;
 };
 
-// Feedback testimonials: the quote first, then who said it, then an optional video.
+// Feedback testimonials, in a 3 × 2 grid: a B2B/B2C tab on the top edge, the quote, who said it,
+// then an optional video.
 
 // Names, roles and the one line from each video (transcribed from the testimonial videos;
 // the CMS has older names/roles and no quotes yet); keyed by the CMS name.
@@ -31,13 +32,48 @@ const PEOPLE: Record<string, { name?: string; role: string; quote: string }> = {
     role: 'Co-founder',
     quote: 'They went above and beyond simply creating an appealing design. Their designs make complex processes easy to navigate.',
   },
+  'Kaitlin Guarino': {
+    role: 'COO & Co-founder',
+    quote: '',
+  },
   'Madhura Bhattad': {
     name: 'Madhur Bhattad',
     role: 'Product Head',
     quote: 'They often went through multiple iterations to help balance business and user needs.',
   },
 };
-export default function TestimonialQuotes({ items }: { items: T[] }) {
+
+// Who each team builds for, shown as a tab on the card's top edge. Keyed by the CMS company name.
+const KIND: Record<string, 'B2B' | 'B2C'> = {
+  ImpactCraft: 'B2B',
+  ImpacrCraft: 'B2B', // CMS spelling
+  EasyGTM: 'B2B',
+  KreditMind: 'B2B',
+  StratosX: 'B2B',
+  Mumfy: 'B2C',
+  SportsHedge: 'B2C',
+};
+
+// Testimonials waiting on the person's own words or sign-off. They show on localhost only
+// never on the live site. Once approved, move them into the CMS.
+const DRAFTS: T[] =
+  process.env.NODE_ENV === 'production'
+    ? []
+    : [
+        {
+          id: 'draft-stratosx',
+          person_name: 'Kaitlin Guarino',
+          company: 'StratosX',
+          avatar_url: '/images/testimonials/kaitlin-guarino.webp',
+          video_url: null,
+          // DRAFT for Kaitlin to edit or approve. Not her words yet.
+          quote:
+            'Airline recovery is complex by nature. Darshan designed it as one ecosystem: predicting disruptions, running live operations and optimising after, as three modules we sell to airlines.',
+        },
+      ];
+
+export default function TestimonialQuotes({ items: cms }: { items: T[] }) {
+  const items = [...(cms ?? []), ...DRAFTS];
   const [video, setVideo] = useState<string | null>(null);
 
   useEffect(() => {
@@ -56,7 +92,11 @@ export default function TestimonialQuotes({ items }: { items: T[] }) {
       <h3 className="tq-h">What the teams I worked with say</h3>
       <div className="tq-row">
         {items.map((t) => (
-          <figure className="tq-card" key={t.id}>
+          <figure
+            className={`tq-card${KIND[t.company ?? ''] ? ` k-${KIND[t.company ?? ''].toLowerCase()}` : ''}`}
+            key={t.id}
+          >
+            {KIND[t.company ?? ''] ? <span className="tq-kind">{KIND[t.company ?? '']}</span> : null}
             {/* quote from the CMS, else the line taken from the video; no placeholder on the live site */}
             {t.quote || PEOPLE[t.person_name ?? '']?.quote ? (
               <blockquote>{`“${t.quote || PEOPLE[t.person_name ?? '']?.quote}”`}</blockquote>
@@ -66,7 +106,9 @@ export default function TestimonialQuotes({ items }: { items: T[] }) {
                 className="tq-av"
                 style={{ backgroundImage: t.avatar_url ? `url(${t.avatar_url})` : undefined }}
                 aria-hidden="true"
-              />
+              >
+                {t.avatar_url ? null : (PEOPLE[t.person_name ?? '']?.name ?? t.person_name ?? '?').charAt(0)}
+              </span>
               <span className="tq-who">
                 <b>{PEOPLE[t.person_name ?? '']?.name ?? t.person_name}</b>
                 <span>
