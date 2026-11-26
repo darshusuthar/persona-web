@@ -108,6 +108,8 @@ mark.ph{background:#fff1a8;color:#5a4a00;border-radius:5px;padding:0 .28em;font-
 .tq-av{width:42px;height:42px;border-radius:50%;background:#ddd center/cover;flex:none;display:grid;place-items:center;font-size:16px;font-weight:600;color:#fff;background-color:var(--k,#a9a9b3)}
 .tq-who{display:flex;flex-direction:column;font-size:13.5px;color:var(--muted);line-height:1.35}
 .tq-who b{color:var(--ink);font-weight:600}
+.tq-co{color:inherit;text-decoration:underline;text-decoration-color:rgba(0,0,0,.28);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+.tq-co:hover{color:var(--ink);text-decoration-color:var(--ink)}
 .tq-watch{align-self:flex-start;border:0;background:#f2f2f5;color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;font-weight:500;cursor:pointer}
 .tq-watch:hover{background:#e7e7ec}
 

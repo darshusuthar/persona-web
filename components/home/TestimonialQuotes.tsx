@@ -54,6 +54,17 @@ const KIND: Record<string, 'B2B' | 'B2C'> = {
   SportsHedge: 'B2C',
 };
 
+// Each company's public website, linked from its name on the card. Keyed by the CMS company name.
+// SportsHedge has no live site (the domain is parked), so it stays plain text.
+const SITE: Record<string, string> = {
+  ImpactCraft: 'https://impactcraft.ai/',
+  ImpacrCraft: 'https://impactcraft.ai/', // CMS spelling
+  EasyGTM: 'https://easygtm.com/',
+  KreditMind: 'https://kreditmind.com/',
+  StratosX: 'https://www.stratosx.ai/',
+  Mumfy: 'https://mumfy.app/',
+};
+
 // Testimonials that live in code rather than the CMS (no video). Approved by the person.
 const EXTRA: T[] = [
         {
@@ -108,7 +119,15 @@ export default function TestimonialQuotes({ items: cms }: { items: T[] }) {
               <span className="tq-who">
                 <b>{PEOPLE[t.person_name ?? '']?.name ?? t.person_name}</b>
                 <span>
-                  {[PEOPLE[t.person_name ?? '']?.role, t.company === 'ImpacrCraft' ? 'ImpactCraft' : t.company].filter(Boolean).join(', ')}
+                  {PEOPLE[t.person_name ?? '']?.role}
+                  {PEOPLE[t.person_name ?? '']?.role && t.company ? ', ' : null}
+                  {t.company && SITE[t.company] ? (
+                    <a className="tq-co" href={SITE[t.company]} target="_blank" rel="noopener noreferrer">
+                      {t.company === 'ImpacrCraft' ? 'ImpactCraft' : t.company}
+                    </a>
+                  ) : (
+                    t.company
+                  )}
                 </span>
               </span>
             </figcaption>
