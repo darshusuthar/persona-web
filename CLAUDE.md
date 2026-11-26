@@ -13,6 +13,7 @@ In code:
 - Home order (`app/page.tsx`): HeroIntro → Shipped work (`#work`, `WorkCards.tsx`) → `FounderSection.tsx` (teem.fit) → `ProduxSection.tsx` (studio and testimonials) → `YouTubeSection.tsx` (podcast) → Footer
 - Testimonial names, roles and quotes: `components/home/TestimonialQuotes.tsx` (`PEOPLE` map, transcribed from the videos)
 - Case study overview boxes (role, team, source, challenge, what was different, impact) and copy fixes: `lib/caseOverview.tsx` (`OVERVIEW`, `COPY_FIXES`), rendered by `components/CaseStudyView.tsx`
+- **Roles have one source:** `role` in `lib/caseOverview.tsx` drives the home card, the case study header's Role and the "My role" box (the DB `role` column is only a fallback). Aspora and ImpactCraft: Lead Designer · Meesho: Product Designer · Sensibull: Founding Designer.
 - Nav items: `components/Nav.tsx` (Home, Case studies → `/#work`, Darshan's Diary → `/podcast`, About; Thoughts is hidden, commented out)
 - Share card: `app/opengraph-image.tsx` (photo `assets/og/portrait.jpg`, Poppins fonts in `assets/og`); metadata in `app/layout.tsx`
 - Redesign styles: `app/feedback.css`. Case study page styles: `app/work/case-study.css`

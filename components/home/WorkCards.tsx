@@ -26,7 +26,7 @@ export default function WorkCards({ rows }: { rows: Row[] }) {
             <span className="wk-body">
               <span className="wk-head">
                 <BrandLogo b={BRANDS[o.brand]} scale={1.1} />
-                <span className="wk-role">{o.cardRole}</span>
+                <span className="wk-role">{o.role}</span>
               </span>
               <span className="wk-title">{o.card}</span>
               <span className="wk-impact">{o.cardImpact}</span>

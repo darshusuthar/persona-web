@@ -14,8 +14,7 @@ export type Overview = {
   cover?: string; // card image, when it differs from the case study banner
   card: string; // impact-story title for the home card
   cardImpact: React.ReactNode;
-  cardRole: string; // my role, shown on the home card
-  role: React.ReactNode;
+  role: string; // my role: shown on the home card, the case study header and the My role box
   team: React.ReactNode;
   challenge: React.ReactNode;
   impact: React.ReactNode;
@@ -36,8 +35,7 @@ export const OVERVIEW: Record<string, Overview> = {
     shot: { fit: 'contain', bg: '#ffffff', pad: '0' },
     card: 'How one setting turned a one-time gold buy into a habit',
     cardImpact: 'Target: SIP conversion from ~3% to 7%, and 6% of monthly transacting users on a SIP within 3 months',
-    cardRole: 'Lead Designer',
-    role: 'Product Design Consultant, end-to-end design lead',
+    role: 'Lead Designer',
     team: 'The wealth pod PM, front-end engineers and the support manager',
     challenge: 'More than half of our gold buyers in the UAE bought exactly once, and almost no one came back.',
     impact:
@@ -58,9 +56,8 @@ export const OVERVIEW: Record<string, Overview> = {
     when: 'Apr 2025',
     card: 'How a daily priority feed replaced a dashboard nobody acted on',
     cardImpact: '74% of signals now acted on within 24 hours, up from 18% on the old dashboard',
-    cardRole: 'Lead Designer',
-    role: 'Product Designer',
-    team: 'The founder, directly',
+    role: 'Lead Designer',
+    team: 'Founder, product manager and developers',
     challenge:
       'One dashboard served every role, so customer success managers couldn’t tell which accounts needed them first.',
     impact:
@@ -78,7 +75,6 @@ export const OVERVIEW: Record<string, Overview> = {
     shot: { fit: 'contain', bg: '#fddfef', pad: '0' },
     card: 'One cart for many suppliers: how ordering got simpler',
     cardImpact: '11% growth in orders placed per day, 3 months after launch',
-    cardRole: 'Product Designer',
     role: 'Product Designer',
     team: 'A cross-functional team and my reporting manager',
     challenge: 'Users could only order from one supplier at a time, so a basket of products meant several separate orders.',
@@ -95,8 +91,7 @@ export const OVERVIEW: Record<string, Overview> = {
     when: 'Mar 2020',
     card: 'Redesigning the one screen every options trader lives in',
     cardImpact: '350% growth in paid users, 6 months after launch',
-    cardRole: 'Founding Designer',
-    role: 'Founding designer',
+    role: 'Founding Designer',
     team: 'The founder, the PM and the engineering team',
     challenge: 'The strategy builder is the most important feature of options trading, and it was the hardest to use.',
     impact: '350% growth in paid users, 6 months after launch (along with a few smaller feature revamps).',

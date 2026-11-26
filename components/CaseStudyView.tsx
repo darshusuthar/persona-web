@@ -40,7 +40,7 @@ export default function CaseStudyView({ c: raw }: { c: Record<string, any> }) {
           {c.lead ? <p className="lead">{c.lead}</p> : null}
           <div className="cs-meta">
             {c.year ? <div className="m"><b>Date</b><span>{c.year}</span></div> : null}
-            {c.role ? <div className="m"><b>Role</b><span>{c.role}</span></div> : null}
+            {o?.role || c.role ? <div className="m"><b>Role</b><span>{o?.role || c.role}</span></div> : null}
             {c.tools ? <div className="m"><b>{c.tools_label || 'Tools'}</b><span>{c.tools}</span></div> : null}
           </div>
           {o ? (
