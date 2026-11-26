@@ -54,26 +54,22 @@ const KIND: Record<string, 'B2B' | 'B2C'> = {
   SportsHedge: 'B2C',
 };
 
-// Testimonials waiting on the person's own words or sign-off. They show on localhost only
-// never on the live site. Once approved, move them into the CMS.
-const DRAFTS: T[] =
-  process.env.NODE_ENV === 'production'
-    ? []
-    : [
+// Testimonials that live in code rather than the CMS (no video). Approved by the person.
+const EXTRA: T[] = [
         {
-          id: 'draft-stratosx',
+          id: 'stratosx-kaitlin',
           person_name: 'Kaitlin Guarino',
           company: 'StratosX',
           avatar_url: '/images/testimonials/kaitlin-guarino.webp',
           video_url: null,
-          // DRAFT for Kaitlin to edit or approve. Not her words yet.
+          // approved by Kaitlin
           quote:
             'Airline recovery is complex by nature. Darshan designed it as one ecosystem: predicting disruptions, running live operations and optimising after, as three modules we sell to airlines.',
         },
-      ];
+];
 
 export default function TestimonialQuotes({ items: cms }: { items: T[] }) {
-  const items = [...(cms ?? []), ...DRAFTS];
+  const items = [...(cms ?? []), ...EXTRA];
   const [video, setVideo] = useState<string | null>(null);
 
   useEffect(() => {
