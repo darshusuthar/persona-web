@@ -3,6 +3,7 @@ mark.ph{background:#fff1a8;color:#5a4a00;border-radius:5px;padding:0 .28em;font-
 .yt mark.ph,.cs-brief-dark mark.ph{background:#5a4a00;color:#fff1a8}
 
 .brand-logo{display:inline-block;flex:none;height:calc(var(--h) * 1px);background:var(--c);-webkit-mask:var(--src) var(--mp,left center)/var(--ms,contain) no-repeat;mask:var(--src) var(--mp,left center)/var(--ms,contain) no-repeat}
+.brand-logo.full{background:var(--src) var(--mp,left center)/var(--ms,contain) no-repeat;-webkit-mask:none;mask:none}
 
 .hi-btn{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 20px;border-radius:999px;font-size:15px;font-weight:500;border:1px solid rgba(0,0,0,.14);background:rgba(255,255,255,.7);color:var(--ink);text-decoration:none;transition:background .2s,border-color .2s}
 .hi-btn:hover{background:#fff;border-color:rgba(0,0,0,.3)}

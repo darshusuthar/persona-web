@@ -16,13 +16,15 @@ export type Brand = {
   vh: number; // balanced height in px at the reference size
   crop?: { size: string; pos: string }; // for files with built-in padding
   nudge?: string; // optical vertical shift, e.g. for a wordmark whose descender makes it sit high
+  full?: boolean; // a full-colour logo file: shown as is, not tinted with `color`
 };
 
 export const BRANDS: Record<string, Brand> = {
   aspora: { key: 'aspora', name: 'Aspora', src: img('case-studies/aspora-logo%20(1).png'), color: '#5b3df5', ratio: 4.69, vh: 16, nudge: '16%' }, // the 'p' descender makes the box taller than the letters
   sensibull: { key: 'sensibull', name: 'Sensibull', src: img('case-studies/SB%20Logo.png'), color: '#f26722', ratio: 5.5, vh: 19 },
   meesho: { key: 'meesho', name: 'Meesho', src: img('case-studies/MS%20Logo.png'), color: '#9f2089', ratio: 4.76, vh: 18 },
-  impactcraft: { key: 'impactcraft', name: 'ImpactCraft', src: img('case-studies/IC%20Logo.png'), color: '#2f8fd0', ratio: 4.14, vh: 25 },
+  // two-tone colour logo (light-blue and navy mark, navy wordmark), from ImpactCraft's own files
+  impactcraft: { key: 'impactcraft', name: 'ImpactCraft', src: '/images/brands/impactcraft-logo.png', color: '#15235f', ratio: 4.17, vh: 27, full: true },
   teemfit: {
     key: 'teemfit',
     name: 'teem.fit',
@@ -38,7 +40,7 @@ export const BRANDS: Record<string, Brand> = {
 export function BrandLogo({ b, scale = 1 }: { b: Brand; scale?: number }) {
   return (
     <span
-      className="brand-logo"
+      className={`brand-logo${b.full ? ' full' : ''}`}
       role="img"
       aria-label={b.name}
       style={
