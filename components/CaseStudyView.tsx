@@ -42,6 +42,16 @@ export default function CaseStudyView({ c: raw }: { c: Record<string, any> }) {
             {c.year ? <div className="m"><b>Date</b><span>{c.year}</span></div> : null}
             {o?.role || c.role ? <div className="m"><b>Role</b><span>{o?.role || c.role}</span></div> : null}
             {c.tools ? <div className="m"><b>{c.tools_label || 'Tools'}</b><span>{c.tools}</span></div> : null}
+            {o?.site ? (
+              <div className="m">
+                <b>Company</b>
+                <span>
+                  <a className="cs-site" href={o.site.href} target="_blank" rel="noopener noreferrer">
+                    {o.site.label} <span aria-hidden="true">↗</span>
+                  </a>
+                </span>
+              </div>
+            ) : null}
           </div>
           {o ? (
             // Fixed overview, same fields in the same order on every case study.

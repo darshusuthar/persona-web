@@ -21,6 +21,7 @@ export type Overview = {
   different: React.ReactNode;
   source: React.ReactNode;
   links: { label: string; href?: string }[];
+  site: { label: string; href: string }; // the company's public website, linked in the case study header
 };
 
 const LINKS = [{ label: 'Figma file' }, { label: 'Prototype' }, { label: 'Deck' }];
@@ -47,24 +48,26 @@ export const OVERVIEW: Record<string, Overview> = {
         Data. 54% of our UAE gold buyers bought exactly once, and money started leaving faster than it came in.
       </>
     ),
+    site: { label: 'aspora.com', href: 'https://www.aspora.com/' },
     links: LINKS,
   },
   impactcraft: {
     brand: 'impactcraft',
-    sector: 'B2B SaaS',
+    sector: 'B2B SaaS · Generative AI',
     company: 'ImpactCraft',
     when: 'Apr 2025',
-    card: 'How a daily priority feed replaced a dashboard nobody acted on',
-    cardImpact: '74% of signals now acted on within 24 hours, up from 18% on the old dashboard',
+    card: 'Turning AI signals into a priority feed customer success teams act on',
+    cardImpact: '74% of critical risks and opportunities now acted on within 24 hours, up from 18%',
     role: 'Lead Designer',
     team: 'Founder, product manager and developers',
     challenge:
       'One dashboard served every role, so customer success managers couldn’t tell which accounts needed them first.',
     impact:
-      '74% of signals from across the product are now acted on within 24 hours, up from 18% on the old dashboard.',
+      '74% of critical risk and opportunity signals are now acted on within 24 hours, up from 18%. Measured from real follow-up in each account’s email, Slack, accounting and CRM.',
     different: 'Instead of a better dashboard, I designed a role-relevant priority feed: what to act on today, and why.',
     source:
       'Research and client conversations. It came from the logistics team we supported, who use the product every day: their different levels of users each needed something different from the same screen.',
+    site: { label: 'impactcraft.ai', href: 'https://impactcraft.ai/' },
     links: LINKS,
   },
   checkout: {
@@ -82,6 +85,7 @@ export const OVERVIEW: Record<string, Overview> = {
     different:
       'Rethought the cart for many suppliers, designed for every edge case from partly serviceable addresses to returns, and made price differences between Buy Now and Add to Cart clear.',
     source: 'Our user research, and the business goal of growing the number of orders.',
+    site: { label: 'meesho.com', href: 'https://www.meesho.com/' },
     links: LINKS,
   },
   builder: {
@@ -98,6 +102,7 @@ export const OVERVIEW: Record<string, Overview> = {
     different:
       'Instead of making traders assemble a strategy leg by leg, I turned the mental model they already use, the everyday trading language of bullish, bearish and neutral, into ready-made strategies to pick from. That became the new starting point of the whole builder.',
     source: 'Support tickets. The problem first surfaced in what traders raised with support.',
+    site: { label: 'sensibull.com', href: 'https://sensibull.com/' },
     links: LINKS,
   },
 };
