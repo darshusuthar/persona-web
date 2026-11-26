@@ -63,7 +63,7 @@ export const OVERVIEW: Record<string, Overview> = {
     challenge:
       'One dashboard served every role, so customer success managers couldn’t tell which accounts needed them first.',
     impact:
-      '74% of critical risk and opportunity signals are now acted on within 24 hours, up from 18%. Measured from real follow-up in each account’s email, Slack, accounting and CRM.',
+      '74% of critical risk and opportunity signals are now acted on within 24 hours, up from 18%. Measured from the moment a signal is generated to when its root cause is acted on.',
     different: 'Instead of a better dashboard, I designed a role-relevant priority feed: what to act on today, and why.',
     source:
       'Research and client conversations. It came from the logistics team we supported, who use the product every day: their different levels of users each needed something different from the same screen.',
